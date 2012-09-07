@@ -1,0 +1,43 @@
+# The key associated to your site.
+key: <site_key>
+
+# Version control system used locally for your project.
+vcs: <vcs>
+
+# Framework to use on Gondor.
+framework: wsgi
+
+# This path is relative to your project root (the directory gondor.yml lives in.)
+requirements_file: requirements.txt
+
+# Commands to be executed during deployment. These can handle migrations or
+# moving static files into place. Accepts same parameters as gondor run.
+on_deploy:
+    - manage.py syncdb --noinput
+    - manage.py collectstatic --noinput
+
+# URLs which should be served by Gondor mapping to a filesystem location
+# relative to your writable storage area.
+static_urls:
+    - /site_media:
+        root: site_media/
+
+wsgi:
+    # The WSGI entry point of your application in two parts separated by a
+    # colon. Example:
+    #
+    #     wsgi:application
+    #
+    # wsgi = the Python module which should be importable
+    # application = the callable in the Python module
+    entry_point: {{ project_name }}.wsgi:application
+
+    # Options for gunicorn which runs your WSGI project.
+    gunicorn:
+        # The worker class used to run gunicorn (possible values include:
+        # sync, eventlet and gevent)
+        worker_class: sync
+
+# Adds extra environment variables to the instance environment.
+env:
+    DJANGO_SETTINGS_MODULE: {{ project_name }}.settings_gondor
