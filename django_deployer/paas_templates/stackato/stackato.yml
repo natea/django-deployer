@@ -15,12 +15,12 @@ requirements:
 processes:
   web: $STACKATO_UWSGI --static-map {{ static_url }}=$HOME/static
 services:
-{% if database == 'PostgreSQL' %}
+{%- if database == 'PostgreSQL' %}
   postgresql-{{ project_name }}: postgresql
-{% endif %}
-{% if database == 'MySQL' %}
+{%- endif %}
+{%- if database == 'MySQL' %}
   mysql-{{ project_name }}: mysql
-{% endif %}
+{%- endif %}
   filesystem-{{ project_name }}: filesystem
 #  ${name}-cache: memcached
 hooks:
