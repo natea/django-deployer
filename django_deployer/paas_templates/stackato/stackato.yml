@@ -5,7 +5,7 @@ framework:
   home-dir: app
 env:
   DJANGO_SETTINGS_MODULE: {{ django_settings }}_stackato
-requirements:
+#requirements:
   # pypm:
   #   - psycopg2
   #   - django
