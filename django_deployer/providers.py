@@ -41,6 +41,12 @@ class PaaSProvider(object):
         """
         Renders and writes a template_name to a dest given some template_args.
         """
+        template_args = template_args.copy()
+
+        # Substitute values here
+        pyversion = template_args['pyversion']
+        template_args['pyversion'] = cls.PYVERSIONS[pyversion]
+
         template = template_env.get_template(template_name)
         contents = template.render(**template_args)
         _write_file(dest, contents)
