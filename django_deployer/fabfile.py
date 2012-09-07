@@ -1,11 +1,10 @@
 import yaml
 import os
 import posixpath
-import pkg_resources
 
 from fabric.api import *
 from fabric.colors import green, red, yellow
-from fabric.contrib.files import exists, contains, upload_template
+from fabric.contrib.files import exists, contains
 
 def init():
     _green("We need to ask a few questions before we can deploy your Django app")
@@ -17,8 +16,9 @@ def init():
         project_name = prompt("What is your Django project's name?")
     django_settings = prompt("What is your Django settings module?", default="%s.settings" % project_name)
     requirements = prompt("Where is your requirements.txt file?", default="requirements.txt")
+
     _green("Tell us where your static files and uploaded media files are located")
-    # TODO: eventually get these values by reading the settings.py?
+    # TODO: get these values by reading the settings.py file
     static_url = prompt("What is your STATIC_URL?", default="/static")
     static_root = prompt("Where is your STATIC_ROOT?", default="%s/static/" % project_name)
     media_url = prompt("What is your MEDIA_URL?", default="/media")
@@ -39,7 +39,7 @@ def _create_deploy_yaml(site):
     _green("Creating a deploy.yml with your app's deploy info...")
     site_yaml_dict = site
     file = _join(os.getcwd(), 'deploy.yml')
-    if file:
+    if os.path.exists(file):
         _red("Detected an existing deploy.yml file.")
         overwrite = prompt("Overwrite your existing deploy.yml file?", default="No")
         if overwrite == "No":
