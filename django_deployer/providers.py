@@ -29,6 +29,8 @@ class PaaSProvider(object):
     def _create_configs(cls, site):
         provider = cls.name
 
+        cls._render_config('wsgi.py', 'wsgi.py', site)
+
         yaml_template_name = os.path.join(provider, '%s.yml' % provider)
         cls._render_config('%s.yml' % provider, yaml_template_name, site)
 
