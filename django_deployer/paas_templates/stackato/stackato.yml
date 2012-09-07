@@ -1,0 +1,25 @@
+name: ${name}
+framework: python
+runtime: python27
+env:
+  DJANGO_SETTINGS_MODULE: ${name}.settings
+requirements:
+  pypm:
+    - psycopg2
+    - django
+    - south
+  pip:
+    - python-memcached
+processes:
+  web: $STACKATO_UWSGI --static-map /foo=$HOME/static --static-map /bar=$HOME/sub
+services:
+  ${name}-db: postgresql
+  ${name}-cache: memcached
+hooks:
+  post-staging:
+    - python manage.py syncdb --noinput
+    - python manage.py migrate
+    - echo "Run 'stackato run python manage.py createsuperuser' to create an admin user"
+ignores: 
+  - .git
+  - dev.db
