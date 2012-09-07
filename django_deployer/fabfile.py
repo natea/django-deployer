@@ -67,22 +67,22 @@ def _create_deploy_yaml(site, provider):
 
 def _create_provider_configs():
     site = yaml.safe_load(_read_file(DEPLOY_YAML))
-
     provider = site['provider']
 
-    yaml_template_name     = os.path.join(provider, '%s.yml' % provider)
+    yaml_template_name = os.path.join(provider, '%s.yml' % provider)
+    _render_config('%s.yml' % provider, yaml_template_name, site)
+
     settings_template_name = os.path.join(provider, 'settings_%s.py' % provider)
-
-    yaml_template     = template_env.get_template(yaml_template_name)
-    settings_template = template_env.get_template(settings_template_name)
-
-    yaml_contents     = yaml_template.render(**site)
-    settings_contents = settings_template.render(**site)
-
     settings_path = site['django_settings'].replace('.', '/') + '_%s.py' % provider
+    _render_config(settings_path, settings_template_name, site)
 
-    _write_file('%s.yml' % provider, yaml_contents)
-    _write_file(settings_path, settings_contents)
+def _render_config(dest, template_name, template_args):
+    """
+    Renders and writes a template_name to a dest given some template_args.
+    """
+    template = template_env.get_template(template_name)
+    contents = template.render(**template_args)
+    _write_file(dest, contents)
 
 def _write_file(path, contents):
     file = open(path, 'w')
