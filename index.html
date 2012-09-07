@@ -4,11 +4,11 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Django-deployer : Generic Deployment tool for Django that supports popular PaaS providers such as Heroku, Dotcloud, Stackato, OpenShift, Gondor" />
+    <meta name="description" content="django-deployer : Generic Deployment tool for Django that supports popular PaaS providers such as Heroku, Dotcloud, Stackato, OpenShift, Gondor" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Django-deployer</title>
+    <title>django-deployer</title>
   </head>
 
   <body>
@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/natea/django-deployer">View on GitHub</a>
 
-          <h1 id="project_title">Django-deployer</h1>
+          <h1 id="project_title">django-deployer</h1>
           <h2 id="project_tagline">Generic Deployment tool for Django that supports popular PaaS providers such as Heroku, Dotcloud, Stackato, OpenShift, Gondor</h2>
 
             <section id="downloads">
@@ -31,17 +31,38 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Resources</h3>
+        <p>The goal of django-deployer is to minimize the effort to deploy a Django app to any of the popular PaaS providers. By asking a series of questions about the Django app, we can generate a generic deploy.yml file that can be consumed by any of the PaaS providers. Each PaaS provider can translate these requirements into a configuration that will work to deploy to their PaaS.</p>
 
-<p>Some other tools that you could use for deploying Django:
-<a href="https://github.com/duointeractive/django-fabtastic">https://github.com/duointeractive/django-fabtastic</a>
-<a href="https://github.com/gcollazo/Fabulous">https://github.com/gcollazo/Fabulous</a>
-<a href="https://github.com/reverie/django-fabfile">https://github.com/reverie/django-fabfile</a>
-<a href="https://github.com/tswicegood/django-on-vagrant">https://github.com/tswicegood/django-on-vagrant</a>
-<a href="https://github.com/webengineer/django-fabfile">https://github.com/webengineer/django-fabfile</a>
-<a href="https://github.com/alexisbellido/The-Django-gunicorn-fabfile-project">https://github.com/alexisbellido/The-Django-gunicorn-fabfile-project</a>
-<a href="https://github.com/akumria/django-paas">https://github.com/akumria/django-paas</a>
-<a href="http://bits.btubbs.com/silk-deployment">http://bits.btubbs.com/silk-deployment</a></p>
+<h3>Resources</h3>
+
+<p>This is not a new problem. A collection of other deployment tools that we found when researching this project:</p>
+
+<ul>
+<li><a href="https://github.com/duointeractive/django-fabtastic">https://github.com/duointeractive/django-fabtastic</a></li>
+<li><a href="https://github.com/gcollazo/Fabulous">https://github.com/gcollazo/Fabulous</a></li>
+<li><a href="https://github.com/reverie/django-fabfile">https://github.com/reverie/django-fabfile</a></li>
+<li><a href="https://github.com/tswicegood/django-on-vagrant">https://github.com/tswicegood/django-on-vagrant</a></li>
+<li><a href="https://github.com/webengineer/django-fabfile">https://github.com/webengineer/django-fabfile</a></li>
+<li><a href="https://github.com/alexisbellido/The-Django-gunicorn-fabfile-project">https://github.com/alexisbellido/The-Django-gunicorn-fabfile-project</a></li>
+<li><a href="https://github.com/akumria/django-paas">https://github.com/akumria/django-paas</a></li>
+<li><a href="http://bits.btubbs.com/silk-deployment">http://bits.btubbs.com/silk-deployment</a></li>
+</ul><h3>PaaS providers</h3>
+
+<p>Here are instructions for how to deploy Django from each of the PaaS providers:</p>
+
+<p>build "consumers" that read this file and output the appropriate files/dirs to be able to deploy to:</p>
+
+<ul>
+<li><a href="https://devcenter.heroku.com/articles/django">Heroku</a></li>
+<li><a href="http://docs.dotcloud.com/0.4/tutorials/python/django/">DotCloud</a></li>
+<li><a href="https://gondor.io/support/django/setup/">Gondor.io</a></li>
+<li><a href="https://github.com/openshift/django-example">OpenShift</a></li>
+<li><a href="http://docs.stackato.com/deploy/languages/python/django.html">Stackato</a></li>
+<li><a href="http://aws.typepad.com/aws/2012/08/announcing-aws-elastic-beanstalk-support-for-python-and-seamless-database-integration.html">Amazon Elastic Beanstalk</a></li>
+<li><a href="https://developers.google.com/appengine/docs/python/cloud-sql/django">Google App Engine</a></li>
+</ul><h3>Development</h3>
+
+<p>If you want to contribute to django-deployer, here is how you can check it out.</p>
 
 <pre><code>$ git clone git://github.com/natea/django-deployer.git
 $ cd django-deployer
@@ -71,7 +92,7 @@ $ ...
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Django-deployer maintained by <a href="https://github.com/natea">natea</a></p>
+        <p class="copyright">django-deployer maintained by <a href="https://github.com/natea">natea</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
