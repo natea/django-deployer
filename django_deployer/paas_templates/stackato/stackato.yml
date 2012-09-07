@@ -1,20 +1,25 @@
-name: ${name}
+name: {{ project_name }
 framework: python
-runtime: python27
+runtime: {{ pyversion }}
 env:
-  DJANGO_SETTINGS_MODULE: ${name}.settings
+  DJANGO_SETTINGS_MODULE: {{ django_settings }}
 requirements:
-  pypm:
-    - psycopg2
-    - django
-    - south
-  pip:
-    - python-memcached
+  # pypm:
+  #   - psycopg2
+  #   - django
+  #   - south
+  # pip:
+  #   - python-memcached
 processes:
-  web: $STACKATO_UWSGI --static-map /foo=$HOME/static --static-map /bar=$HOME/sub
+  web: $STACKATO_UWSGI --static-map /{{ static_url }}=$HOME/static
 services:
-  ${name}-db: postgresql
-  ${name}-cache: memcached
+{% if database == 'PostgreSQL' %}
+  {{ project_name }}-postgresql: postgresql
+{% endif %}
+{% if database == 'MySQL' %}
+  {{ project_name }}-mysql: mysql
+{% endif %}
+#  ${name}-cache: memcached
 hooks:
   post-staging:
     - python manage.py syncdb --noinput

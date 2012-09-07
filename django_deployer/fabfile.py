@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 import yaml
 import os
+<<<<<<< HEAD
+import posixpath
+=======
 import pkg_resources
+>>>>>>> 6cdde2582c11a233dee774f9a58cffb9a37f0056
 
 from jinja2 import Environment, PackageLoader
 
 from fabric.api import *
 from fabric.colors import green, red, yellow
+<<<<<<< HEAD
+from fabric.contrib.files import exists, contains
+=======
 
 
 DEPLOY_YAML = os.path.join(os.getcwd(), 'deploy.yml')
@@ -28,13 +35,20 @@ def init():
         project_name = prompt("What is your Django project's name?")
     django_settings = prompt("What is your Django settings module?", default="%s.settings" % project_name)
     requirements = prompt("Where is your requirements.txt file?", default="requirements.txt")
+
     _green("Tell us where your static files and uploaded media files are located")
+
+    # TODO: get these values by reading the settings.py file
+    static_url = prompt("What is your STATIC_URL?", default="/static")
+    media_url = prompt("What is your MEDIA_URL?", default="/media")
 
     return {'pyversion': pyversion,
             'database': database,
             'project_name': project_name,
             'django_settings': django_settings,
             'requirements': requirements,
+            'static_url': static_url,
+            'media_url': media_url,
             }
 
 def deploy(provider=None):
@@ -56,7 +70,7 @@ def _create_deploy_yaml(site, provider):
     site_yaml_dict = site
     site_yaml_dict['provider'] = provider
     file = _join(os.getcwd(), 'deploy.yml')
-    if file:
+    if os.path.exists(file):
         _red("Detected an existing deploy.yml file.")
         overwrite = prompt("Overwrite your existing deploy.yml file?", default="No")
         if overwrite == "No":
@@ -84,6 +98,10 @@ def _render_config(dest, template_name, template_args):
     contents = template.render(**template_args)
     _write_file(dest, contents)
 
+#
+# utils
+#
+ 
 def _write_file(path, contents):
     file = open(path, 'w')
     file.write(contents)
