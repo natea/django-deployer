@@ -8,3 +8,4 @@ DATABASES = {
 }
 
 MEDIA_ROOT = os.environ['STACKATO_FILESYSTEM']
+

@@ -1,10 +1,29 @@
+# -*- coding: utf-8 -*-
 import yaml
 import os
+<<<<<<< HEAD
 import posixpath
+=======
+import pkg_resources
+>>>>>>> 6cdde2582c11a233dee774f9a58cffb9a37f0056
+
+from jinja2 import Environment, PackageLoader
 
 from fabric.api import *
 from fabric.colors import green, red, yellow
+<<<<<<< HEAD
 from fabric.contrib.files import exists, contains
+=======
+
+
+DEPLOY_YAML = os.path.join(os.getcwd(), 'deploy.yml')
+
+template_env = Environment(loader=PackageLoader('django_deployer', 'paas_templates'))
+
+
+#
+# Tasks
+#
 
 def init():
     _green("We need to ask a few questions before we can deploy your Django app")
@@ -18,11 +37,10 @@ def init():
     requirements = prompt("Where is your requirements.txt file?", default="requirements.txt")
 
     _green("Tell us where your static files and uploaded media files are located")
+
     # TODO: get these values by reading the settings.py file
     static_url = prompt("What is your STATIC_URL?", default="/static")
-    static_root = prompt("Where is your STATIC_ROOT?", default="%s/static/" % project_name)
     media_url = prompt("What is your MEDIA_URL?", default="/media")
-    media_root = prompt("Where is your MEDIA_ROOT?", default="%s/media/" % project_name)
 
     return {'pyversion': pyversion,
             'database': database,
@@ -30,14 +48,27 @@ def init():
             'django_settings': django_settings,
             'requirements': requirements,
             'static_url': static_url,
-            'static_root': static_root,
             'media_url': media_url,
-            'media_root': media_root,
             }
 
-def _create_deploy_yaml(site):
+def deploy(provider=None):
+    site = init()
+
+    if not provider:
+        provider = prompt("Which provider would you like to deploy to?", default="stackato")
+
+    _create_deploy_yaml(site, provider)
+    _create_provider_configs()
+
+
+#
+# Helpers
+#
+
+def _create_deploy_yaml(site, provider):
     _green("Creating a deploy.yml with your app's deploy info...")
     site_yaml_dict = site
+    site_yaml_dict['provider'] = provider
     file = _join(os.getcwd(), 'deploy.yml')
     if os.path.exists(file):
         _red("Detected an existing deploy.yml file.")
@@ -48,12 +79,50 @@ def _create_deploy_yaml(site):
     _write_file(file, yaml.safe_dump(site_yaml_dict, default_flow_style=False))
     _green("Created %s" % file)
 
+def _create_provider_configs():
+    site = yaml.safe_load(_read_file(DEPLOY_YAML))
+
+    provider = site['provider']
+
+    yaml_template_name     = os.path.join(provider, '%s.yml' % provider)
+    settings_template_name = os.path.join(provider, 'settings_%s.py' % provider)
+
+    yaml_template     = template_env.get_template(yaml_template_name)
+    settings_template = template_env.get_template(settings_template_name)
+
+    yaml_contents     = yaml_template.render(**site)
+    settings_contents = settings_template.render(**site)
+
+    settings_path = site['django_settings'].replace('.', '/') + '_%s.py' % provider
+
+    _write_file('%s.yml' % provider, yaml_contents)
+    _write_file(settings_path, settings_contents)
+
+#
+# utils
+#
+ 
 def _write_file(path, contents):
     file = open(path, 'w')
     file.write(contents)
     file.close()
 
-# pretty colors
+def _read_file(path):
+    file = open(path, 'r')
+    contents = file.read()
+    file.close()
+    return contents
+
+def _join(*args):
+    """Convenience wrapper around os.path.join to make the rest of our
+    functions more readable."""
+    return os.path.join(*args)
+
+
+#
+# Pretty colors
+#
+
 def _green(text):
     print green(text)
 
@@ -62,12 +131,3 @@ def _red(text):
 
 def _yellow(text):
     print yellow(text)
-
-def _join(*args):
-    """Convenience wrapper around posixpath.join to make the rest of our
-    functions more readable."""
-    return posixpath.join(*args)
-
-def deploy():
-    site = init()
-    _create_deploy_yaml(site)
