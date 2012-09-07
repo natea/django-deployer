@@ -16,6 +16,10 @@ setup(
     packages=find_packages(),
     install_requires=[
         'fabric==1.4.3',
+        'heroku',
+        'dotcloud',
+        'gondor',
+        'pyyaml',
     ],
     classifiers=(
         "Development Status :: 3 - Alpha",
