@@ -29,21 +29,12 @@ def init():
     django_settings = prompt("What is your Django settings module?", default="%s.settings" % project_name)
     requirements = prompt("Where is your requirements.txt file?", default="requirements.txt")
     _green("Tell us where your static files and uploaded media files are located")
-    # TODO: eventually get these values by reading the settings.py?
-    static_url = prompt("What is your STATIC_URL?", default="/static")
-    static_root = prompt("Where is your STATIC_ROOT?", default="%s/static/" % project_name)
-    media_url = prompt("What is your MEDIA_URL?", default="/media")
-    media_root = prompt("Where is your MEDIA_ROOT?", default="%s/media/" % project_name)
 
     return {'pyversion': pyversion,
             'database': database,
             'project_name': project_name,
             'django_settings': django_settings,
             'requirements': requirements,
-            'static_url': static_url,
-            'static_root': static_root,
-            'media_url': media_url,
-            'media_root': media_root,
             }
 
 def deploy(provider=None):
