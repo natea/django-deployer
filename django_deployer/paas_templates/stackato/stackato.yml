@@ -11,7 +11,7 @@ requirements:
   # pip:
   #   - python-memcached
 processes:
-  web: $STACKATO_UWSGI --static-map /{{ static_url }}=$HOME/static
+  web: $STACKATO_UWSGI --static-map {{ static_url }}=$HOME/static
 services:
 {% if database == 'PostgreSQL' %}
   {{ project_name }}-postgresql: postgresql
