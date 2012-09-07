@@ -18,8 +18,9 @@ def init():
             'django_settings': django_settings
             }
 
-def _create_deploy_yaml(site):
+def _create_deploy_yaml(site, provider):
     site_yaml_dict = site
+    site_yaml_dict['provider'] = provider
     file = _join(os.getcwd(), 'deploy.yml')
     _write_file(file, yaml.safe_dump(site_yaml_dict, default_flow_style=False))
 
@@ -43,6 +44,10 @@ def _join(*args):
     functions more readable."""
     return posixpath.join(*args)
 
-def deploy():
+def deploy(provider=None):
     site = init()
-    _create_deploy_yaml(site)
+
+    if not provider:
+        provider = prompt("Which provider would you like to deploy to?", default="stackato")
+
+    _create_deploy_yaml(site, provider)
