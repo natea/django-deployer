@@ -1,4 +1,4 @@
-name: {{ project_name }
+name: {{ project_name }}
 framework: python
 runtime: {{ pyversion }}
 env:

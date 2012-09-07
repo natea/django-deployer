@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
 import yaml
 import os
-<<<<<<< HEAD
-import posixpath
-=======
-import pkg_resources
->>>>>>> 6cdde2582c11a233dee774f9a58cffb9a37f0056
 
 from jinja2 import Environment, PackageLoader
 
 from fabric.api import *
 from fabric.colors import green, red, yellow
-<<<<<<< HEAD
-from fabric.contrib.files import exists, contains
-=======
 
 
 DEPLOY_YAML = os.path.join(os.getcwd(), 'deploy.yml')
@@ -39,8 +31,8 @@ def init():
     _green("Tell us where your static files and uploaded media files are located")
 
     # TODO: get these values by reading the settings.py file
-    static_url = prompt("What is your STATIC_URL?", default="/static")
-    media_url = prompt("What is your MEDIA_URL?", default="/media")
+    static_url = prompt("What is your STATIC_URL?", default="/static/")
+    media_url = prompt("What is your MEDIA_URL?", default="/media/")
 
     return {'pyversion': pyversion,
             'database': database,
