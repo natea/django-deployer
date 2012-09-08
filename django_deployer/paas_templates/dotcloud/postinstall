@@ -1,0 +1,6 @@
+#!/bin/sh
+python createdb.py
+python manage.py syncdb --noinput
+python mkadmin.py
+mkdir -p /home/dotcloud/data/media /home/dotcloud/volatile/static
+python manage.py collectstatic --noinput
