@@ -1,5 +1,17 @@
 django-deployer
 ===============
 
-Generic Deployment tool for Django that supports popular PaaS providers such as Heroku, Dotcloud, Stackato, OpenShift, Gondor
+Generic Deployment tool for Django that supports popular PaaS providers
+such as Heroku, Dotcloud, Stackato, OpenShift, and Gondor.
 
+
+Getting Started
+---------------
+
+    pip install django-deployer
+
+    # From your project's root directory:
+    django-deployer-init
+    fab deploy
+
+To see a list of available deployer tasks use `fab --list`.

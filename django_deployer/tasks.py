@@ -17,6 +17,9 @@ from django_deployer.providers import PROVIDERS
 
 
 def init(provider=None):
+    """
+    Runs through a questionnaire to set up your project's deploy settings
+    """
     _green("\nWe need to ask a few questions before we can deploy your Django app")
 
     # TODO: identify the project dir based on where we find the settings.py or urls.py
@@ -53,6 +56,9 @@ def init(provider=None):
     return site
 
 def deploy(provider=None):
+    """
+    Creates the provider config files needed to deploy your project
+    """
     site = init(provider)
 
     site = yaml.safe_load(_read_file(DEPLOY_YAML))
