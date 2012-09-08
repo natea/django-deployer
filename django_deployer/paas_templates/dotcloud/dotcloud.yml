@@ -1,0 +1,13 @@
+www:
+  type: python
+  config:
+    python_version: {{ pyversion }}
+db:
+{%- if database == 'PostgreSQL' %}
+  type: postgresql
+{%- endif %}
+{%- if database == 'MySQL' %}
+  type: mysql
+{%- endif %}
+# cache:
+#    type: redis
