@@ -40,7 +40,8 @@ def init(provider=None):
     media_url = prompt("What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-        provider = prompt("Which provider would you like to deploy to?", default="stackato")
+        provider = prompt("Which provider would you like to deploy to?")
+
 
     site = {
         'pyversion': pyversion,
