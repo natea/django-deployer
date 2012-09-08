@@ -51,6 +51,28 @@ def _validate_project_name(project_name):
     return project_name
 
 
+# TODO: Finish this up
+# Needs to check whether there's a requirements.txt in the root
+# If not, we ask them where their requirements file is and we can
+# write a requirements.txt in the project's root that also points
+# to theirs.
+def _validate_requirements(requirements):
+    requirements_regex = r"^.+requirements.txt$"
+
+    pattern = re.compile(requirements_regex)
+    if not pattern.match(requirements):
+        raise ValueError(red("You must enter the relative path to your requirements.txt file to continue!"))
+
+    if not os.path.exists(os.path.join(os.getcwd(), requirements)):
+        raise ValueError(red(
+            "Couldn't find requirements.txt at the path you gave.\n" \
+            "Make sure you're using django-deployer from your project root."
+        ))
+
+    return requirements
+
+
+
 #
 # Utils
 #
