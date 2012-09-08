@@ -24,7 +24,7 @@ class PaaSProvider(object):
     @classmethod
     def init(cls, site):
         cls._create_configs(site)
-        print self.setup_instructions
+        print cls.setup_instructions
 
     @classmethod
     def deploy(cls):
@@ -126,13 +126,14 @@ class DotCloud(PaaSProvider):
         "Python3.2" : "v3.2",
     }
 
-    def init(self, site):
-        super(DotCloud, self).init(site)
+    @classmethod
+    def init(cls, site):
+        super(DotCloud, cls).init(site)
         
-        cls._render_config('createdb.py', os.path.join(self.name, 'createdb.py'), site)
-        cls._render_config('mkadmin.py', os.path.join(self.name, 'mkadmin.py'), site)
-        cls._render_config('nginx.conf', os.path.join(self.name, 'nginx.conf'), site)
-        cls._render_config('postinstall', os.path.join(self.name, 'postinstall'), site)
+        cls._render_config('createdb.py', os.path.join(cls.name, 'createdb.py'), site)
+        cls._render_config('mkadmin.py', os.path.join(cls.name, 'mkadmin.py'), site)
+        cls._render_config('nginx.conf', os.path.join(cls.name, 'nginx.conf'), site)
+        cls._render_config('postinstall', os.path.join(cls.name, 'postinstall'), site)
 
     def deploy():
         pass
