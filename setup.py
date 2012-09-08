@@ -32,7 +32,7 @@ setup(
     ),
     entry_points={
         'console_scripts' : [
-            'django-deployer-init = django_deployer.main:add_fabfile',
+            'deployer-init = django_deployer.main:add_fabfile',
         ]
     },
 )

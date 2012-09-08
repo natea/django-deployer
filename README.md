@@ -11,7 +11,7 @@ Getting Started
     pip install django-deployer
 
     # From your project's root directory:
-    django-deployer-init
+    deployer-init
     fab deploy
 
 To see a list of available deployer tasks use `fab --list`.
