@@ -12,6 +12,6 @@ Getting Started
 
     # From your project's root directory:
     deployer-init
-    fab deploy
+    fab setup
 
 To see a list of available deployer tasks use `fab --list`.
