@@ -26,7 +26,7 @@ def init(provider=None):
         cont = prompt("Do you want to go through it again and overwrite the current one?", default="No")
 
         if cont.strip().lower() == "no":
-            exit()
+            return None
 
     _green("\nWe need to ask a few questions before we can deploy your Django app")
 
@@ -72,12 +72,13 @@ def init(provider=None):
 
     return site
 
-def deploy(provider=None):
+def setup(provider=None):
     """
     Creates the provider config files needed to deploy your project
     """
-    init(provider)
+    site = init(provider)
+    if not site:
+        site = yaml.safe_load(_read_file(DEPLOY_YAML))
 
-    site = yaml.safe_load(_read_file(DEPLOY_YAML))
     provider_class = PROVIDERS[site['provider']]
     provider_class._create_configs(site)
