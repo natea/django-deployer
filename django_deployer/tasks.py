@@ -6,6 +6,7 @@ from fabric.api import prompt
 from django_deployer.helpers import (
     DEPLOY_YAML,
     _create_deploy_yaml,
+    _validate_django_settings,
     _validate_project_name,
     _read_file,
     _green,
@@ -36,7 +37,12 @@ def init(provider=None):
         "  (This usually contains your settings.py and a urls.py)",
         validate=_validate_project_name
     )
-    django_settings = prompt("* What is your Django settings module?", default="%s.settings" % project_name)
+
+    django_settings = prompt(
+        "* What is your Django settings module?",
+        default="%s.settings" % project_name,
+        validate=_validate_django_settings
+    )
 
     requirements = prompt("* Where is your requirements.txt file?", default="requirements.txt")
     # TODO: confirm that the file exists
@@ -55,7 +61,7 @@ def init(provider=None):
     media_url = prompt("* What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-        provider = prompt("* Which provider would you like to deploy to?")
+        provider = prompt("* Which provider would you like to deploy to?", validate=r".+")
 
     site = {
         'project_name': project_name,

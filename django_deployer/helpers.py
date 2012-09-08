@@ -19,6 +19,22 @@ def _create_deploy_yaml(site):
     _write_file(DEPLOY_YAML, yaml.safe_dump(site, default_flow_style=False))
     _green("Created %s" % DEPLOY_YAML)
 
+def _validate_django_settings(django_settings):
+    django_settings_regex = r"^[\d\w_.]+$"
+
+    pattern = re.compile(django_settings_regex)
+    if not pattern.match(django_settings):
+        raise ValueError(red("You must enter a valid dotted module path to continue!"))
+
+    django_settings_path = django_settings.replace('.', '/') + '.py'
+    if not os.path.exists(django_settings_path):
+        raise ValueError(red(
+            "Couldn't find a settings file at that dotted path.\n" \
+            "Make sure you're using django-deployer from your project root."
+        ))
+
+    return django_settings
+
 def _validate_project_name(project_name):
     project_name_regex = r"^.+$"
 
@@ -29,7 +45,7 @@ def _validate_project_name(project_name):
     if not os.path.exists(os.path.join(os.getcwd(), project_name)):
         raise ValueError(red(
             "Couldn't find that directory name under the current directory.\n" \
-            "Make sure you're using django deployer from your project root."
+            "Make sure you're using django-deployer from your project root."
         ))
 
     return project_name
