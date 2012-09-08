@@ -21,13 +21,17 @@ class PaaSProvider(object):
     setup_instructions = ""
     PYVERSIONS = {}
 
-    def init(self, site):
-        self._create_configs(site)
+    @classmethod
+    def init(cls, site):
+        cls._create_configs(site)
+        print self.setup_instructions
 
-    def deploy(self):
+    @classmethod
+    def deploy(cls):
         raise NotImplementedError()
 
-    def delete(self):
+    @classmethod
+    def delete(cls):
         raise NotImplementedError()
 
 
@@ -79,14 +83,15 @@ Just a few more steps before you're ready to deploy your app!
    the Stackato client, and then add the executable somewhere in your PATH.
    If you're not sure where to place it, you can simply drop it in your
    project's root directory (the same directory as the fabfile.py created
-   by django-deployer.
+   by django-deployer).
 
-2. Once you've done that, target the stackto api with:
+2. Once you've done that, target the stackato api with:
 
        stackato target api.stacka.to
 
    and then login. You can find your sandbox password at
-   https://account.activestate.com, which you'll when using the command:
+   https://account.activestate.com, which you'll need when
+   using the command:
 
        stackato login --email <email>
 
