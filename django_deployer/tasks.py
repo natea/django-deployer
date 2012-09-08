@@ -15,7 +15,7 @@ from django_deployer.providers import PROVIDERS
 
 
 
-def init():
+def init(provider=None):
     _green("We need to ask a few questions before we can deploy your Django app")
     pyversion = prompt("What version of Python does your app need?", default="Python2.7")
     database = prompt("What database does your app use?", default="PostgreSQL")
@@ -32,7 +32,10 @@ def init():
     static_url = prompt("What is your STATIC_URL?", default="/static/")
     media_url = prompt("What is your MEDIA_URL?", default="/media/")
 
-    return {
+    if not provider:
+        provider = prompt("Which provider would you like to deploy to?", default="stackato")
+
+    site = {
         'pyversion': pyversion,
         'database': database,
         'project_name': project_name,
@@ -40,17 +43,16 @@ def init():
         'requirements': requirements,
         'static_url': static_url,
         'media_url': media_url,
+        'provider': provider,
     }
 
+    _create_deploy_yaml(site)
+
+    return site
+
 def deploy(provider=None):
-    site = init()
-
-    if not provider:
-        provider = prompt("Which provider would you like to deploy to?", default="stackato")
-
-    _create_deploy_yaml(site, provider)
-
-    provider_class = PROVIDERS[provider]
+    site = init(provider)
 
     site = yaml.safe_load(_read_file(DEPLOY_YAML))
+    provider_class = PROVIDERS[site['provider']]
     provider_class._create_configs(site)

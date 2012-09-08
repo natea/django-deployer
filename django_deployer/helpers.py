@@ -13,10 +13,9 @@ DEPLOY_YAML = os.path.join(os.getcwd(), 'deploy.yml')
 # Helpers
 #
 
-def _create_deploy_yaml(site, provider):
+def _create_deploy_yaml(site):
     _green("Creating a deploy.yml with your app's deploy info...")
     site_yaml_dict = site
-    site_yaml_dict['provider'] = provider
     file = DEPLOY_YAML
     if os.path.exists(file):
         _red("Detected an existing deploy.yml file.")
