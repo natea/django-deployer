@@ -16,14 +16,20 @@ class PaaSProvider(object):
     class and override all methods.
     """
 
-    def init():
+    # Subclasses should override these
+    name = ""
+    setup_instructions = ""
+    PYVERSIONS = {}
+
+    def init(self, site):
+        self._create_configs(site)
+
+    def deploy(self):
         raise NotImplementedError()
 
-    def deploy():
+    def delete(self):
         raise NotImplementedError()
 
-    def delete():
-        raise NotImplementedError()
 
     @classmethod
     def _create_configs(cls, site):
@@ -65,6 +71,34 @@ class Stackato(PaaSProvider):
         "Python2.7" : "python27",
         "Python3.2" : "python32",
     }
+
+    setup_instructions = """
+Just a few more steps before you're ready to deploy your app!
+
+1. Go to http://www.activestate.com/stackato/download_client to download
+   the Stackato client, and then add the executable somewhere in your PATH.
+   If you're not sure where to place it, you can simply drop it in your
+   project's root directory (the same directory as the fabfile.py created
+   by django-deployer.
+
+2. Once you've done that, target the stackto api with:
+
+       stackato target api.stacka.to
+
+   and then login. You can find your sandbox password at
+   https://account.activestate.com, which you'll when using the command:
+
+       stackato login --email <email>
+
+3. You can push your app the first time with:
+
+       stackato push -n
+
+   and make subsequent updates with:
+
+       stackato update
+
+"""
 
     def init():
         pass
