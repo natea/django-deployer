@@ -1,1 +1,1 @@
-from django_deployer.tasks import deploy
+from django_deployer.tasks import *
