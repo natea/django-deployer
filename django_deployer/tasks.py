@@ -26,6 +26,13 @@ def init(provider=None):
     django_settings = prompt("What is your Django settings module?", default="%s.settings" % project_name)
     requirements = prompt("Where is your requirements.txt file?", default="requirements.txt")
 
+    # TODO: confirm that the file exists
+    # parse the requirements file and warn the user about best practices:
+    #   Django==1.4.1
+    #   psycopg2 if they selected PostgreSQL
+    #   MySQL-python if they selected MySQL
+    #   South for database migrations
+    #   dj-database-url
     _green("Tell us where your static files and uploaded media files are located")
 
     # TODO: get these values by reading the settings.py file
