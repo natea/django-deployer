@@ -75,8 +75,33 @@ class Stackato(PaaSProvider):
     def delete():
         pass
 
+class DotCloud(PaaSProvider):
+    """
+    Dotcloud PaaSProvider.
+    """
+    name = "dotcloud"
 
+    PYVERSIONS = {
+        "Python2.6" : "v2.6",
+        "Python2.7" : "v2.7",
+        "Python3.2" : "v3.2",
+    }
+
+    def init(self, site):
+        super(DotCloud, self).init(site)
+        
+        cls._render_config('createdb.py', os.path.join(self.name, 'createdb.py'), site)
+        cls._render_config('mkadmin.py', os.path.join(self.name, 'mkadmin.py'), site)
+        cls._render_config('nginx.conf', os.path.join(self.name, 'nginx.conf'), site)
+        cls._render_config('postinstall', os.path.join(self.name, 'postinstall'), site)
+
+    def deploy():
+        pass
+
+    def delete():
+        pass
 
 PROVIDERS = {
     'stackato' : Stackato,
+    'dotcloud' : DotCloud,
 }
