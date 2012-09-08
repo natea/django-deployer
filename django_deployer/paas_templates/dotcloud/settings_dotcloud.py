@@ -8,10 +8,12 @@ from .settings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+default_db_config = dj_database_url.parse(env["DOTCLOUD_DB_SQL_URL"])
+default_db_config["NAME"] = "djangodb" 
 # DB is the name of the database service defined in dotcloud.yml
 # additional databases can be defined and named here (i.e. DOTCLOUD_ANOTHERDB_SQL_URL)
 DATABASES = {
-    "default": dj_database_url.parse(env["DOTCLOUD_DB_SQL_URL"]),
+    "default": default_db_config,
 }
 
 LOGGING = {
