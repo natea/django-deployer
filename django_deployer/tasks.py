@@ -1,3 +1,4 @@
+import os
 import yaml
 
 from fabric.api import prompt
@@ -20,6 +21,13 @@ def init(provider=None):
     """
     Runs through a questionnaire to set up your project's deploy settings
     """
+    if os.path.exists(DEPLOY_YAML):
+        _yellow("\nIt looks like you've already gone through the questionnaire.")
+        cont = prompt("Do you want to go through it again and overwrite the current one?", default="No")
+
+        if cont.strip().lower() == "no":
+            exit()
+
     _green("\nWe need to ask a few questions before we can deploy your Django app")
 
     # TODO: identify the project dir based on where we find the settings.py or urls.py
@@ -68,7 +76,7 @@ def deploy(provider=None):
     """
     Creates the provider config files needed to deploy your project
     """
-    site = init(provider)
+    init(provider)
 
     site = yaml.safe_load(_read_file(DEPLOY_YAML))
     provider_class = PROVIDERS[site['provider']]
