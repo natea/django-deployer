@@ -82,4 +82,4 @@ def setup(provider=None):
         site = yaml.safe_load(_read_file(DEPLOY_YAML))
 
     provider_class = PROVIDERS[site['provider']]
-    provider_class._create_configs(site)
+    provider_class.init(site)

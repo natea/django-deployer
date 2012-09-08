@@ -21,13 +21,13 @@ class PaaSProvider(object):
     setup_instructions = ""
     PYVERSIONS = {}
 
-    def init():
+    def init(self, site):
+        self._create_configs(site)
+
+    def deploy(self):
         raise NotImplementedError()
 
-    def deploy():
-        raise NotImplementedError()
-
-    def delete():
+    def delete(self):
         raise NotImplementedError()
 
 
