@@ -55,12 +55,7 @@ def init(provider=None):
     media_url = prompt("* What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-<<<<<<< HEAD
-        provider = prompt("Which provider would you like to deploy to?")
-
-=======
-        provider = prompt("* Which provider would you like to deploy to?", default="stackato")
->>>>>>> 8ad6dad71db80c5204acc7ea38bce193d692ed93
+        provider = prompt("* Which provider would you like to deploy to?")
 
     site = {
         'project_name': project_name,
