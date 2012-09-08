@@ -1,4 +1,5 @@
 import os
+import re
 import yaml
 
 from fabric.api import prompt
@@ -25,6 +26,21 @@ def _create_deploy_yaml(site):
 
     _write_file(file, yaml.safe_dump(site_yaml_dict, default_flow_style=False))
     _green("Created %s" % file)
+
+def _validate_project_name(project_name):
+    project_name_regex = r"^.+$"
+
+    pattern = re.compile(project_name_regex)
+    if not pattern.match(project_name):
+        raise ValueError(red("You must enter a project name to continue!"))
+
+    if not os.path.exists(os.path.join(os.getcwd(), project_name)):
+        raise ValueError(red(
+            "Couldn't find that directory name under the current directory.\n" \
+            "Make sure you're using django deployer from your project root."
+        ))
+
+    return project_name
 
 
 #
