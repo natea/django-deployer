@@ -45,18 +45,30 @@
 <li><a href="http://docs.stackato.com/deploy/languages/python/django.html">Stackato</a></li>
 <li><a href="http://aws.typepad.com/aws/2012/08/announcing-aws-elastic-beanstalk-support-for-python-and-seamless-database-integration.html">Amazon Elastic Beanstalk</a></li>
 <li><a href="https://developers.google.com/appengine/docs/python/cloud-sql/django">Google App Engine</a></li>
-</ul><h3>Development</h3>
+</ul><h3>Usage</h3>
 
-<p>If you want to contribute to django-deployer, here is how you can check it out. More complete instructions coming soon...</p>
+<p>Install django-deployer in your virtualenv, and run the deployer-init command to copy the fabfile into your root folder. Then run the <code>fab setup</code> command to tell django-deployer about your project.</p>
+
+<pre><code>$ cd &lt;root_of_your_project&gt;
+
+$ pip install django-deployer (this won't work until a release has been made to PyPi, so in the meantime, use the following)
+$ pip install -e git+git://github.com/natea/django-deployer.git#egg=django-deployer 
+$ deployer-init
+$ fab setup
+</code></pre>
+
+<h3>Development</h3>
+
+<p>If you want to contribute to django-deployer, here is how you can check it out and install it.</p>
 
 <pre><code>$ git clone git://github.com/natea/django-deployer.git
 $ cd django-deployer
-$ ...
+$ python setup.py develop
 </code></pre>
 
 <h3>Authors and Contributors</h3>
 
-<p>This project was born at the DjangoCon 2012 sprint by <a href="https://github.com/natea" class="user-mention">@natea</a> and <a href="https://github.com/johnthedebs" class="user-mention">@johnthedebs</a> with input from Jacob Kaplan Moss (<a href="https://github.com/jacobian" class="user-mention">@jacobian</a>), Andrew Godwin from ep.io, Gabriel and Ken Cochrane from <a href="https://github.com/dotcloud" class="user-mention">@dotcloud</a>, Kenneth Reitz from <a href="https://github.com/heroku" class="user-mention">@heroku</a> and Diane Mueller from <a href="https://github.com/ActiveState" class="user-mention">@ActiveState</a>.</p>
+<p>This project was born at the DjangoCon 2012 sprint by <a href="https://github.com/natea" class="user-mention">@natea</a> and <a href="https://github.com/johnthedebs" class="user-mention">@johnthedebs</a> with input from Jacob Kaplan Moss (<a href="https://github.com/jacobian" class="user-mention">@jacobian</a>), Andrew Godwin (<a href="https://github.com/andrewgodwin" class="user-mention">@andrewgodwin</a>) from ep.io, Gabriel Grant (<a href="https://github.com/gabrielgrant" class="user-mention">@gabrielgrant</a>) and Ken Cochrane (<a href="https://github.com/kencochrane" class="user-mention">@kencochrane</a>) from <a href="https://github.com/dotcloud" class="user-mention">@dotcloud</a>, Kenneth Reitz (<a href="https://github.com/kennethreitz" class="user-mention">@kennethreitz</a>) from <a href="https://github.com/heroku" class="user-mention">@heroku</a> and Diane Mueller from <a href="https://github.com/ActiveState" class="user-mention">@ActiveState</a>.</p>
 
 <h3>Support or Contact</h3>
 
@@ -74,6 +86,7 @@ $ ...
 <li><a href="https://github.com/webengineer/django-fabfile">https://github.com/webengineer/django-fabfile</a></li>
 <li><a href="https://github.com/alexisbellido/The-Django-gunicorn-fabfile-project">https://github.com/alexisbellido/The-Django-gunicorn-fabfile-project</a></li>
 <li><a href="https://github.com/akumria/django-paas">https://github.com/akumria/django-paas</a></li>
+<li><a href="https://github.com/typeish/django-deploy">https://github.com/typeish/django-deploy</a></li>
 <li><a href="http://bits.btubbs.com/silk-deployment">http://bits.btubbs.com/silk-deployment</a></li>
 </ul>
       </section>
