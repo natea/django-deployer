@@ -11,16 +11,17 @@ setup(
     description="Django deployment utility for popular PaaS providers",
     long_description=open('README.md').read(),
     author="Nate Aune",
-    author_email="nate@appsembler",
+    author_email="nate@appsembler.com",
     url="https://github.com/natea/django-deployer",
     packages=find_packages(),
     install_requires=[
-        'fabric==1.4.3',
+        'fabric==1.6.0',  # formerly 1.4.3
         'jinja2==2.6',
         'heroku',
         'dotcloud',
         'gondor',
         'pyyaml',
+        'sphinx==1.1.3',
     ],
     classifiers=(
         "Development Status :: 3 - Alpha",
