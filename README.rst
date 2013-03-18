@@ -16,8 +16,3 @@ Getting Started
 
 To see a list of available deployer tasks use `fab --list`.
 
-.. csv-table:: PaaS Directives
-   :header: "Heroku", "dotCloud", "OpenShift"
-   :widths: 15, 10, 30
-
-   "","", "rhc app create"
