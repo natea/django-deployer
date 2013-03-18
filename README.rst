@@ -20,4 +20,4 @@ To see a list of available deployer tasks use `fab --list`.
    :header: "Heroku", "dotCloud", "OpenShift"
    :widths: 15, 10, 30
 
-   "","rhc app create", ""
+   "","", "rhc app create"
