@@ -9,7 +9,7 @@ setup(
     name="django-deployer",
     version="0.1.0",
     description="Django deployment utility for popular PaaS providers",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     author="Nate Aune",
     author_email="nate@appsembler.com",
     url="https://github.com/natea/django-deployer",
