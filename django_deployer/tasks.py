@@ -63,6 +63,16 @@ def init(provider=None):
     if not provider:
         provider = prompt("* Which provider would you like to deploy to?", validate=r".+")
 
+    # Where to place the provider specific questions
+    addtional_site = {}
+    if provider == "appengine":
+        instancename = prompt("* What's the instance name of your Cloud SQL instance?", validate=r'.+')
+        databasename = prompt("* What's your database name?")
+        addtional_site.update({
+            'instancename': instancename,
+            'databasename': databasename
+        })
+
     site = {
         'project_name': project_name,
         'pyversion': pyversion,
@@ -73,6 +83,7 @@ def init(provider=None):
         'media_url': media_url,
         'provider': provider,
     }
+    site.update(addtional_site)
 
     _create_deploy_yaml(site)
 
