@@ -8,6 +8,8 @@ such as Heroku, Dotcloud, Stackato, OpenShift, and Gondor.
 Getting Started
 ---------------
 
+.. code:: bash
+
     pip install django-deployer
 
     # From your project's root directory:
