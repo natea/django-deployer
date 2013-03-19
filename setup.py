@@ -22,6 +22,7 @@ setup(
         'gondor',
         'pyyaml',
         'sphinx==1.1.3',
+        'requests==0.14.2',
     ],
     classifiers=(
         "Development Status :: 3 - Alpha",
