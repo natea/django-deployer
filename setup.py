@@ -14,13 +14,17 @@ setup(
     author_email="nate@appsembler",
     url="https://github.com/natea/django-deployer",
     packages=find_packages(),
+    package_data = {'django_deployer': 
+        [
+            'paas_templates/*/*',
+        ]},
     install_requires=[
         'fabric==1.4.3',
         'jinja2==2.6',
         'heroku',
         'dotcloud',
         'gondor',
-        'pyyaml',
+        'pyyaml'
     ],
     classifiers=(
         "Development Status :: 3 - Alpha",

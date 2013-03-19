@@ -66,10 +66,11 @@ def init(provider=None):
     # Where to place the provider specific questions
     addtional_site = {}
     if provider == "appengine":
-        instancename = prompt("* What's the instance name of your Cloud SQL instance?", validate=r'.+')
+        instancename = prompt("* What's the full instance id of your Cloud SQL instance?(shuold be in format \"projectid:instanceid\")", validate=r'.+:.+')
         databasename = prompt("* What's your database name?")
         addtional_site.update({
-            'instancename': instancename,
+            # quotes for the yaml issue
+            'instancename': "\"%s\"" % instancename,
             'databasename': databasename
         })
 

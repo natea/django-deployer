@@ -37,11 +37,22 @@ class PaaSProvider(object):
 
     @classmethod
     def _create_configs(cls, site):
+        """
+        This is going to generate the following configuration:
+        * wsgi.py
+        * <provider>.yml
+        * settings_<provider>.py
+        """
         provider = cls.name
 
         cls._render_config('wsgi.py', 'wsgi.py', site)
 
-        yaml_template_name = os.path.join(provider, '%s.yml' % provider)
+        if provider == 'appengine':
+            provider_yml_name = 'app.yaml'
+        else:
+            provider_yml_name = '%s.yml' % provider
+
+        yaml_template_name = os.path.join(provider, provider_yml_name)
         cls._render_config('%s.yml' % provider, yaml_template_name, site)
 
         settings_template_name = os.path.join(provider, 'settings_%s.py' % provider)
@@ -52,6 +63,8 @@ class PaaSProvider(object):
     def _render_config(cls, dest, template_name, template_args):
         """
         Renders and writes a template_name to a dest given some template_args.
+        
+        This is for platform-specific configurations
         """
         template_args = template_args.copy()
 
@@ -141,7 +154,36 @@ class DotCloud(PaaSProvider):
     def delete():
         pass
 
+class AppEngine(PaaSProvider):
+    """
+    AppEngine PaaSProvider
+    """
+
+    name = 'appengine'
+
+    PYVERSIONS = {
+            "Python2.7": "v2.7"
+            }
+
+    @classmethod
+    def init(cls, site):
+        super(AppEngine, cls).init(site)
+
+        get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
+
+        config_list = ['app.yaml']
+        map(get_config, config_list)
+
+        
+    def deploy():
+        pass
+    
+    def delete():
+        pass
+
+
 PROVIDERS = {
     'stackato' : Stackato,
     'dotcloud' : DotCloud,
+    'appengine': AppEngine
 }

@@ -1,0 +1,21 @@
+application: {{ project_name }}
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+libraries:
+- name: django
+  version: "latest"
+- name: PIL
+  version: "latest"
+
+builtins:
+- django_wsgi: on
+
+env_variables:
+    DJANGO_SETTINGS_MODULE: '{{ project_name }}.settings_appengine'
+
+handlers:
+- url: /static
+  static_dir: {{ static_url }}
