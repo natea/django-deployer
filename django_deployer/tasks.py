@@ -64,11 +64,11 @@ def init(provider=None):
         provider = prompt("* Which provider would you like to deploy to?", validate=r".+")
 
     # Where to place the provider specific questions
-    addtional_site = {}
+    additional_site = {}
     if provider == "appengine":
         instancename = prompt("* What's the full instance id of your Cloud SQL instance?(shuold be in format \"projectid:instanceid\")", validate=r'.+:.+')
         databasename = prompt("* What's your database name?")
-        addtional_site.update({
+        additional_site.update({
             # quotes for the yaml issue
             'instancename': "\"%s\"" % instancename,
             'databasename': databasename
@@ -84,7 +84,7 @@ def init(provider=None):
         'media_url': media_url,
         'provider': provider,
     }
-    site.update(addtional_site)
+    site.update(additional_site)
 
     _create_deploy_yaml(site)
 
