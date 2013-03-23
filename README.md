@@ -2,7 +2,7 @@ django-deployer
 ===============
 
 Generic Deployment tool for Django that supports popular PaaS providers
-such as Heroku, Dotcloud, Stackato, OpenShift, and Gondor.
+such as Heroku, Dotcloud, Stackato, OpenShift, Google App Engine  and Gondor.
 
 
 Getting Started
