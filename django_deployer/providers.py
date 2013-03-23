@@ -5,6 +5,9 @@ from jinja2 import Environment, PackageLoader
 
 from django_deployer.helpers import _write_file
 
+from fabric.operations import local
+from fabric.context_managers import prefix, shell_env
+
 
 template_env = Environment(loader=PackageLoader('django_deployer', 'paas_templates'))
 
@@ -20,6 +23,7 @@ class PaaSProvider(object):
     name = ""
     setup_instructions = ""
     PYVERSIONS = {}
+    provider_yml_name = "%s.yml" % name
 
     @classmethod
     def init(cls, site):
@@ -47,13 +51,9 @@ class PaaSProvider(object):
 
         cls._render_config('wsgi.py', 'wsgi.py', site)
 
-        if provider == 'appengine':
-            provider_yml_name = 'app.yaml'
-        else:
-            provider_yml_name = '%s.yml' % provider
 
-        yaml_template_name = os.path.join(provider, provider_yml_name)
-        cls._render_config('%s.yml' % provider, yaml_template_name, site)
+        yaml_template_name = os.path.join(provider, cls.provider_yml_name)
+        cls._render_config(cls.provider_yml_name, yaml_template_name, site)
 
         settings_template_name = os.path.join(provider, 'settings_%s.py' % provider)
         settings_path = site['django_settings'].replace('.', '/') + '_%s.py' % provider
@@ -165,18 +165,43 @@ class AppEngine(PaaSProvider):
             "Python2.7": "v2.7"
             }
 
+    provider_yml_name = "app.yaml"
+
     @classmethod
     def init(cls, site):
         super(AppEngine, cls).init(site)
 
         get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
 
-        config_list = ['app.yaml']
+        config_list = ['requirements_deploy.txt', 'manage']
         map(get_config, config_list)
 
+    @classmethod 
+    def deploy(cls, site):
+        """
+        tasks:
+            * collect statics
+            * fetch all the reuqired libraries from pip (require_deploy.txt)
+        """
+        # Create virtual environment
+        # TODO: detect whether it is a virtualenv
+        local("virtualenv --no-site-packages env")
         
-    def deploy():
-        pass
+        # Collects static files into static folder
+        local("env/bin/pip install -r requirements_deploy.txt")
+        python_paths = [
+                'env/lib/python2.7',
+                '/usr/local/google_appengine',
+                '/usr/local/google_appengine/lib/django-1.4'
+                ]
+        print 'Python path:', ":".join(python_paths)
+        with shell_env(PYTHONPATH=":".join(python_paths)):
+            local("env/bin/python %(project_name)s/manage.py collectstatic --noinput --settings=%(django_settings)s_%(provider)s" % site)
+        # install requirements for deployment
+        local("mkdir -p require_lib")
+        # deploy
+        local("appcfg.py update .")
+        
     
     def delete():
         pass

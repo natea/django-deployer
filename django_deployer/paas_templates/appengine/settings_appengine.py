@@ -1,8 +1,27 @@
-from .settings import *
+try:
+    import dev_appserver
+    dev_appserver.fix_sys_path()
+except:
+    pass
+
+from settings import *
+
+import os
+import sys
+
+on_appengine = os.getenv('SERVER_SOFTWARE','').startswith('Google App Engine')
+
+
+# insert libraries
+REQUIRE_LIB_PATH = os.path.join(os.path.dirname(__file__), '..', 'env/lib/python2.7/site-packages')
+
+lib_to_insert = [REQUIRE_LIB_PATH]
+map(lambda path: sys.path.insert(0, path), lib_to_insert)
 
 # use cloudsql while on the production
-if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
+if (on_appengine or
     os.getenv('SETTINGS_MODE') == 'prod'):
+    # here must use 'SETTINGS_MODE' == 'prod', it's not included in rocket_engine.on_appengine
     # Running on production App Engine, so use a Google Cloud SQL database.
     DATABASES = {
         'default': {
@@ -11,7 +30,7 @@ if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
             'NAME': '{{ databasename }}',
         }
     }
-elif not DATABASES:
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -21,22 +40,15 @@ elif not DATABASES:
         }
     }
 
-
-
-# django email backend for appengine
-EMAIL_BACKEND = 'rocket_engine.email.EmailBackend'
-
-INSTALLED_APPS = tuple()
-
 # Installed apps for django-deployer
 PAAS_INSTALLED_APPS = (
     'rocket_engine',
 )
 
-try:
-    INSTALLED_APPS = tuple(list(INSTALLED_APPS) + list(PAAS_INSTALLED_APPS))
-except NameError:
-    pass
+INSTALLED_APPS = tuple(list(INSTALLED_APPS) + list(PAAS_INSTALLED_APPS))
+
+# django email backend for appengine
+EMAIL_BACKEND = 'rocket_engine.email.EmailBackend'
 
 # use Blob datastore for default file storage
 DEFAULT_FILE_STORAGE = 'rocket_engine.storage.BlobStorage'

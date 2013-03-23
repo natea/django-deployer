@@ -1,0 +1,1 @@
+env/bin/python {{ project_name }}/manage.py $@ --settings={{ project_name }}.settings_appengine

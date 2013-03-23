@@ -19,7 +19,7 @@ setup(
             'paas_templates/*/*',
         ]},
     install_requires=[
-        'fabric==1.4.3',
+        'fabric==1.6.0',
         'jinja2==2.6',
         'heroku',
         'dotcloud',
