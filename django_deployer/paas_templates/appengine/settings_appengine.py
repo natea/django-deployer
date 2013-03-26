@@ -11,7 +11,6 @@ import sys
 
 on_appengine = os.getenv('SERVER_SOFTWARE','').startswith('Google App Engine')
 
-
 # insert libraries
 REQUIRE_LIB_PATH = os.path.join(os.path.dirname(__file__), '..', 'env/lib/python2.7/site-packages')
 
