@@ -63,6 +63,21 @@ def init(provider=None):
     if not provider:
         provider = prompt("* Which provider would you like to deploy to?", validate=r".+")
 
+    # Where to place the provider specific questions
+    additional_site = {}
+    if provider == "appengine":
+        applicationid = prompt("* What's your gae application id?")
+        instancename = prompt("* What's the full instance id of your Cloud SQL instance?(shuold be in format \"projectid:instanceid\")", validate=r'.+:.+')
+        databasename = prompt("* What's your database name?")
+        sdk_location = prompt("* Where's your Google App Engine SDK location?", default="/usr/local/google_appengine")
+        additional_site.update({
+            # quotes for the yaml issue
+            'application_id': applicationid,
+            'instancename': instancename,
+            'databasename': databasename,
+            'sdk_location': sdk_location
+        })
+
     site = {
         'project_name': project_name,
         'pyversion': pyversion,
@@ -73,6 +88,7 @@ def init(provider=None):
         'media_url': media_url,
         'provider': provider,
     }
+    site.update(additional_site)
 
     _create_deploy_yaml(site)
 
@@ -89,3 +105,14 @@ def setup(provider=None):
 
     provider_class = PROVIDERS[site['provider']]
     provider_class.init(site)
+
+    
+def deploy(provider=None):
+    """
+    Deploys your porject
+    """
+    if os.path.exists(DEPLOY_YAML):
+        site = yaml.safe_load(_read_file(DEPLOY_YAML))
+
+    provider_class = PROVIDERS[site['provider']]
+    provider_class.deploy(site)
