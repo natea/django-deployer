@@ -179,7 +179,7 @@ class AppEngine(PaaSProvider):
         """
         tasks:
             * collect statics
-            * fetch all the reuqired libraries from pip (require_deploy.txt)
+            * fetch all the required libraries from pip (require_deploy.txt)
         """
         # Create virtual environment
         # TODO: detect whether it is a virtualenv
