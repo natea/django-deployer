@@ -171,7 +171,7 @@ class AppEngine(PaaSProvider):
 
         get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
 
-        config_list = ['requirements_deploy.txt', 'manage']
+        config_list = ['requirements_deploy.txt', 'manage.sh']
         map(get_config, config_list)
 
     @classmethod
