@@ -59,16 +59,15 @@ def init(provider=None):
     media_url = prompt("* What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-        provider = prompt("* Which provider would you like to deploy to? \
-                          (dotcloud, openshift, appengine)", validate=r".+")
+        provider = prompt("* Which provider would you like to deploy to (dotcloud, openshift, appengine)?", validate=r".+")
 
     # Where to place the provider specific questions
+    site = {}
     additional_site = {}
+
     if provider == "appengine":
-        applicationid = prompt("* What's your Google App Engine application ID? (see https://appengine.google.com/)")
-        instancename = prompt("* What's the full instance ID of your Cloud SQL instance? \
-                              (should be in format \"projectid:instanceid\" \
-                              found at https://code.google.com/apis/console/) ", validate=r'.+:.+')
+        applicationid = prompt("* What's your Google App Engine application ID (see https://appengine.google.com/)?")
+        instancename = prompt("* What's the full instance ID of your Cloud SQL instance (should be in format \"projectid:instanceid\" found at https://code.google.com/apis/console/)?", validate=r'.+:.+')
         databasename = prompt("* What's your database name?")
         sdk_location = prompt("* Where is your Google App Engine SDK location?", default="/usr/local/google_appengine")
         additional_site.update({
@@ -76,22 +75,30 @@ def init(provider=None):
             'application_id': applicationid,
             'instancename': instancename,
             'databasename': databasename,
-            'sdk_location': sdk_location
+            'sdk_location': sdk_location,
         })
+
+        # only option with Google App Engine is MySQL, so we'll just hardcode it
+        site = {
+            'database': 'MySQL'
+        }
 
     else:
         database = prompt("* What database does your app use?", default="PostgreSQL")
+        site = {
+            'database': database,
+        }
 
-    site = {
+    site.update({
         'project_name': project_name,
         'pyversion': pyversion,
-        'database': database,
         'django_settings': django_settings,
         'requirements': requirements,
         'static_url': static_url,
         'media_url': media_url,
         'provider': provider,
-    }
+    })
+
     site.update(additional_site)
 
     _create_deploy_yaml(site)
