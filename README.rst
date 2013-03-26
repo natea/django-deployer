@@ -8,6 +8,8 @@ such as Heroku, Dotcloud, Stackato, OpenShift, Google App Engine  and Gondor.
 Getting Started
 ---------------
 
+.. code:: bash
+
     pip install django-deployer
 
     # From your project's root directory:
@@ -15,3 +17,4 @@ Getting Started
     fab setup
 
 To see a list of available deployer tasks use `fab --list`.
+

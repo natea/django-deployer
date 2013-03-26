@@ -8,7 +8,7 @@ setup(
     name="django-deployer",
     version="0.1.0",
     description="Django deployment utility for popular PaaS providers",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     author="Nate Aune",
     author_email="nate@appsembler.com",
     url="https://github.com/natea/django-deployer",
@@ -25,7 +25,8 @@ setup(
         'gondor',
         'pyyaml',
         'sphinx==1.1.3',
-        'pyyaml'
+        'pyyaml',
+        'requests==0.14.2',
     ],
     classifiers=(
         "Development Status :: 3 - Alpha",
