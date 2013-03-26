@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-deployer",
-    version="0.1.0",
+    version="0.1.1",
     description="Django deployment utility for popular PaaS providers",
     long_description=open('README.rst').read(),
     author="Nate Aune",
@@ -20,12 +20,11 @@ setup(
     install_requires=[
         'fabric==1.6.0',  # formerly 1.4.3
         'jinja2==2.6',
-        'heroku',
-        'dotcloud',
-        'gondor',
-        'pyyaml',
+        'heroku==0.1.2',
+        'dotcloud==0.9.4',
+        'gondor==1.2.1',
+        'pyyaml==3.10',
         'sphinx==1.1.3',
-        'pyyaml',
         'requests==0.14.2',
     ],
     classifiers=(
