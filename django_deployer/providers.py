@@ -185,6 +185,7 @@ class AppEngine(PaaSProvider):
         # TODO: detect whether it is a virtualenv
         local("virtualenv --no-site-packages env")
 
+        local("env/bin/pip install -r %(requirements)s")
         # Collects static files into static folder
         local("env/bin/pip install -r requirements_deploy.txt")
         python_paths = [
