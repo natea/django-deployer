@@ -163,6 +163,23 @@ class AppEngine(PaaSProvider):
         "Python2.7": "v2.7"
     }
 
+    setup_instructions = """
+Just a few more steps before you're ready to deploy your app!
+
+1. Run this command to create the virtualenv with all the packages:
+
+        $ fab deploy
+
+2. Once you've done that, run the deploy command
+
+        $ sh manage.sh deploy
+
+3. You can run other commands that will execute on your remotely deployed app, such as:
+
+        $ sh manage.sh dbshell
+
+"""
+
     provider_yml_name = "app.yaml"
 
     @classmethod
