@@ -202,7 +202,7 @@ Just a few more steps before you're ready to deploy your app!
         # TODO: detect whether it is a virtualenv
         local("virtualenv --no-site-packages env")
 
-        local("env/bin/pip install -r %(requirements)s")
+        local("env/bin/pip install -r %(requirements)s" % site)
         # Collects static files into static folder
         local("env/bin/pip install -r requirements_deploy.txt")
         python_paths = [
