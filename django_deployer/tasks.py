@@ -79,7 +79,7 @@ def init(provider=None):
             'sdk_location': sdk_location
         })
 
-    elif:
+    else:
         database = prompt("* What database does your app use?", default="PostgreSQL")
 
     site = {
