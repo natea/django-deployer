@@ -6,11 +6,10 @@ from jinja2 import Environment, PackageLoader
 from django_deployer.helpers import _write_file
 
 from fabric.operations import local
-from fabric.context_managers import prefix, shell_env
+from fabric.context_managers import shell_env
 
 
 template_env = Environment(loader=PackageLoader('django_deployer', 'paas_templates'))
-
 
 
 class PaaSProvider(object):
@@ -38,7 +37,6 @@ class PaaSProvider(object):
     def delete(cls):
         raise NotImplementedError()
 
-
     @classmethod
     def _create_configs(cls, site):
         """
@@ -51,7 +49,6 @@ class PaaSProvider(object):
 
         cls._render_config('wsgi.py', 'wsgi.py', site)
 
-
         yaml_template_name = os.path.join(provider, cls.provider_yml_name)
         cls._render_config(cls.provider_yml_name, yaml_template_name, site)
 
@@ -63,7 +60,7 @@ class PaaSProvider(object):
     def _render_config(cls, dest, template_name, template_args):
         """
         Renders and writes a template_name to a dest given some template_args.
-        
+
         This is for platform-specific configurations
         """
         template_args = template_args.copy()
@@ -77,7 +74,6 @@ class PaaSProvider(object):
         _write_file(dest, contents)
 
 
-
 class Stackato(PaaSProvider):
     """
     ActiveState Stackato PaaSProvider.
@@ -85,8 +81,8 @@ class Stackato(PaaSProvider):
     name = "stackato"
 
     PYVERSIONS = {
-        "Python2.7" : "python27",
-        "Python3.2" : "python32",
+        "Python2.7": "python27",
+        "Python3.2": "python32",
     }
 
     setup_instructions = """
@@ -127,6 +123,7 @@ Just a few more steps before you're ready to deploy your app!
     def delete():
         pass
 
+
 class DotCloud(PaaSProvider):
     """
     Dotcloud PaaSProvider.
@@ -134,15 +131,15 @@ class DotCloud(PaaSProvider):
     name = "dotcloud"
 
     PYVERSIONS = {
-        "Python2.6" : "v2.6",
-        "Python2.7" : "v2.7",
-        "Python3.2" : "v3.2",
+        "Python2.6": "v2.6",
+        "Python2.7": "v2.7",
+        "Python3.2": "v3.2",
     }
 
     @classmethod
     def init(cls, site):
         super(DotCloud, cls).init(site)
-        
+
         cls._render_config('createdb.py', os.path.join(cls.name, 'createdb.py'), site)
         cls._render_config('mkadmin.py', os.path.join(cls.name, 'mkadmin.py'), site)
         cls._render_config('nginx.conf', os.path.join(cls.name, 'nginx.conf'), site)
@@ -154,6 +151,7 @@ class DotCloud(PaaSProvider):
     def delete():
         pass
 
+
 class AppEngine(PaaSProvider):
     """
     AppEngine PaaSProvider
@@ -162,8 +160,8 @@ class AppEngine(PaaSProvider):
     name = 'appengine'
 
     PYVERSIONS = {
-            "Python2.7": "v2.7"
-            }
+        "Python2.7": "v2.7"
+    }
 
     provider_yml_name = "app.yaml"
 
@@ -176,7 +174,7 @@ class AppEngine(PaaSProvider):
         config_list = ['requirements_deploy.txt', 'manage']
         map(get_config, config_list)
 
-    @classmethod 
+    @classmethod
     def deploy(cls, site):
         """
         tasks:
@@ -186,14 +184,14 @@ class AppEngine(PaaSProvider):
         # Create virtual environment
         # TODO: detect whether it is a virtualenv
         local("virtualenv --no-site-packages env")
-        
+
         # Collects static files into static folder
         local("env/bin/pip install -r requirements_deploy.txt")
         python_paths = [
-                'env/lib/python2.7',
-                '/usr/local/google_appengine',
-                '/usr/local/google_appengine/lib/django-1.4'
-                ]
+            'env/lib/python2.7',
+            '/usr/local/google_appengine',
+            '/usr/local/google_appengine/lib/django-1.4'
+        ]
         print 'Python path:', ":".join(python_paths)
         with shell_env(PYTHONPATH=":".join(python_paths)):
             local("env/bin/python %(project_name)s/manage.py collectstatic --noinput --settings=%(django_settings)s_%(provider)s" % site)
@@ -201,14 +199,13 @@ class AppEngine(PaaSProvider):
         local("mkdir -p require_lib")
         # deploy
         local("appcfg.py update .")
-        
-    
+
     def delete():
         pass
 
 
 PROVIDERS = {
-    'stackato' : Stackato,
-    'dotcloud' : DotCloud,
+    'stackato': Stackato,
+    'dotcloud': DotCloud,
     'appengine': AppEngine
 }

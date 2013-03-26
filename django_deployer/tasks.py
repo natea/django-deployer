@@ -17,7 +17,6 @@ from django_deployer.helpers import (
 from django_deployer.providers import PROVIDERS
 
 
-
 def init(provider=None):
     """
     Runs through a questionnaire to set up your project's deploy settings
@@ -61,15 +60,15 @@ def init(provider=None):
     media_url = prompt("* What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-        provider = prompt("* Which provider would you like to deploy to?", validate=r".+")
+        provider = prompt("* Which provider would you like to deploy to? (dotcloud, openshift, appengine)", validate=r".+")
 
     # Where to place the provider specific questions
     additional_site = {}
     if provider == "appengine":
-        applicationid = prompt("* What's your gae application id?")
-        instancename = prompt("* What's the full instance id of your Cloud SQL instance?(shuold be in format \"projectid:instanceid\")", validate=r'.+:.+')
+        applicationid = prompt("* What's your Google App Engine application ID?")
+        instancename = prompt("* What's the full instance ID of your Cloud SQL instance? (should be in format \"projectid:instanceid\")", validate=r'.+:.+')
         databasename = prompt("* What's your database name?")
-        sdk_location = prompt("* Where's your Google App Engine SDK location?", default="/usr/local/google_appengine")
+        sdk_location = prompt("* Where is your Google App Engine SDK location?", default="/usr/local/google_appengine")
         additional_site.update({
             # quotes for the yaml issue
             'application_id': applicationid,
@@ -106,10 +105,10 @@ def setup(provider=None):
     provider_class = PROVIDERS[site['provider']]
     provider_class.init(site)
 
-    
+
 def deploy(provider=None):
     """
-    Deploys your porject
+    Deploys your project
     """
     if os.path.exists(DEPLOY_YAML):
         site = yaml.safe_load(_read_file(DEPLOY_YAML))
