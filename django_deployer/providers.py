@@ -199,7 +199,7 @@ class AppEngine(PaaSProvider):
         # install requirements for deployment
         local("mkdir -p require_lib")
         # deploy
-        local("appcfg.py update .")
+        local("appcfg.py --oauth2 update .")
 
     def delete():
         pass
