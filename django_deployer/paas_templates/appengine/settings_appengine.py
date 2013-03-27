@@ -49,7 +49,14 @@ PAAS_INSTALLED_APPS = (
 INSTALLED_APPS = tuple(list(INSTALLED_APPS) + list(PAAS_INSTALLED_APPS))
 
 # django email backend for appengine
-EMAIL_BACKEND = 'rocket_engine.email.EmailBackend'
+EMAIL_BACKEND = 'rocket_engine.mail.EmailBackend'
+DEFAULT_FROM_EMAIL='example@example.com'
+#NOTICE: DEFAULT_FROM_EMAIL need to be authorized beforehand in AppEngine console, you must be verified with the permission to access that mail address.
+#Steps:
+#1. Change DEFAULT_FROM_EMAIL above to an valid email address and you have the permission to access it.
+#2. Log in to your Google App Engine Account.
+#3. Under Administration, click Permissions, and add the email address.
+#4. Log out, and check for the validation email.
 
 # use Blob datastore for default file storage
 DEFAULT_FILE_STORAGE = 'rocket_engine.storage.BlobStorage'

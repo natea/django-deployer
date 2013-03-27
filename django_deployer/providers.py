@@ -166,15 +166,16 @@ class AppEngine(PaaSProvider):
     setup_instructions = """
 Just a few more steps before you're ready to deploy your app!
 
-1. Run this command to create the virtualenv with all the packages:
+1. Run this command to create the virtualenv with all the packages and deploy:
 
         $ fab deploy
 
-2. Once you've done that, run the deploy command
+2. Create and sync the db on the Cloud SQL:
 
-        $ sh manage.sh deploy
+        $ sh manage.sh cloudcreatedb
+        $ sh manage.sh cloudsyncdb
 
-3. You can run other commands that will execute on your remotely deployed app, such as:
+3. Everything is set up now, you can run other commands that will execute on your remotely deployed app, such as:
 
         $ sh manage.sh dbshell
 
@@ -186,10 +187,16 @@ Just a few more steps before you're ready to deploy your app!
     def init(cls, site):
         super(AppEngine, cls).init(site)
 
-        get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
 
+        # for rendering configs under root
+        get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
         config_list = ['requirements_deploy.txt', 'manage.sh']
         map(get_config, config_list)
+
+        # for rendering configs under django project folder
+        get_django_config = lambda filename: cls._render_config("%s/%s"%(site['project_name'], filename), os.path.join(cls.name, filename), site)
+        django_config_list = ['urls_appengine.py']
+        map(get_django_config, django_config_list)
 
     @classmethod
     def deploy(cls, site):
@@ -197,24 +204,21 @@ Just a few more steps before you're ready to deploy your app!
         tasks:
             * collect statics
             * fetch all the required libraries from pip (require_deploy.txt)
+            * deploy
         """
         # Create virtual environment
         # TODO: detect whether it is a virtualenv
-        local("virtualenv --no-site-packages env")
+        if not os.path.isdir("env"):
+            print "Detected there is no any virtual environment, going to create one..."
+            local("virtualenv --no-site-packages env")
 
-        local("env/bin/pip install -r %(requirements)s" % site)
-        # Collects static files into static folder
-        local("env/bin/pip install -r requirements_deploy.txt")
-        python_paths = [
-            'env/lib/python2.7',
-            '/usr/local/google_appengine',
-            '/usr/local/google_appengine/lib/django-1.4'
-        ]
-        print 'Python path:', ":".join(python_paths)
-        with shell_env(PYTHONPATH=":".join(python_paths)):
-            local("env/bin/python %(project_name)s/manage.py collectstatic --noinput --settings=%(django_settings)s_%(provider)s" % site)
         # install requirements for deployment
-        local("mkdir -p require_lib")
+        local("env/bin/pip install -r %(requirements)s" % site)
+        local("env/bin/pip install -r requirements_deploy.txt")
+
+        # Collects static files into static folder
+        local("sh manage.sh collectstatic --noinput")
+
         # deploy
         local("appcfg.py --oauth2 update .")
 
