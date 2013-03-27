@@ -17,5 +17,5 @@ env_variables:
     DJANGO_SETTINGS_MODULE: '{{ project_name }}.settings_appengine'
 
 handlers:
-- url: {{ static_url }}
-  static_dir: /static
+- url: /static/
+  static_dir: {{ project_name }}/static

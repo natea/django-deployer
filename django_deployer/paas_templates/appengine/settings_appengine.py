@@ -9,6 +9,8 @@ from settings import *
 import os
 import sys
 
+PROJECT_ROOT = os.path.dirname(__file__)
+
 on_appengine = os.getenv('SERVER_SOFTWARE','').startswith('Google App Engine')
 
 # insert libraries
@@ -52,3 +54,13 @@ EMAIL_BACKEND = 'rocket_engine.email.EmailBackend'
 # use Blob datastore for default file storage
 DEFAULT_FILE_STORAGE = 'rocket_engine.storage.BlobStorage'
 
+# static_url
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+# media url
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+
+# use overwriting urls
+ROOT_URLCONF = "{{ project_name }}.urls_appengine"
