@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="django-deployer : Generic Deployment tool for Django that will support popular PaaS providers such as Heroku, Dotcloud, Stackato, OpenShift, Gondor" />
+    <meta name="description" content="django-deployer : Generic Deployment tool for Django that will support PaaS providers such as Heroku, Dotcloud, OpenShift, Amazon Elastic Beanstalk, Google App Engine, Microsoft Azure, Stackato and Gondor" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/natea/django-deployer">View on GitHub</a>
 
           <h1 id="project_title">django-deployer</h1>
-          <h2 id="project_tagline">Generic Deployment tool for Django that will support popular PaaS providers such as Heroku, Dotcloud, Stackato, OpenShift, Gondor</h2>
+          <h2 id="project_tagline">Generic Deployment tool for Django that will support PaaS providers such as Heroku, Dotcloud, OpenShift, Amazon Elastic Beanstalk, Google App Engine, Microsoft Azure, Stackato and Gondor</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/natea/django-deployer/zipball/master">Download this project as a .zip file</a>
@@ -39,12 +39,13 @@
 
 <ul>
 <li><a href="https://devcenter.heroku.com/articles/django">Heroku</a></li>
-<li><a href="http://docs.dotcloud.com/0.4/tutorials/python/django/">DotCloud</a></li>
+<li><a href="http://docs.dotcloud.com/tutorials/python/django/">DotCloud</a></li>
 <li><a href="https://gondor.io/support/django/setup/">Gondor.io</a></li>
-<li><a href="https://github.com/openshift/django-example">OpenShift</a></li>
+<li><a href="https://www.openshift.com/blogs/rapid-python-and-django-app-deployment-to-the-cloud-with-a-paas">OpenShift</a></li>
 <li><a href="http://docs.stackato.com/deploy/languages/python/django.html">Stackato</a></li>
-<li><a href="http://aws.typepad.com/aws/2012/08/announcing-aws-elastic-beanstalk-support-for-python-and-seamless-database-integration.html">Amazon Elastic Beanstalk</a></li>
+<li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_django.html">Amazon Elastic Beanstalk</a></li>
 <li><a href="https://developers.google.com/appengine/docs/python/cloud-sql/django">Google App Engine</a></li>
+<li><a href="http://www.windowsazure.com/en-us/develop/python/tutorials/web-app-with-django/">Microsoft Azure</a></li>
 </ul><h3>Usage</h3>
 
 <p>Install django-deployer in your virtualenv, and run the deployer-init command to copy the fabfile into your root folder. Then run the <code>fab setup</code> command to tell django-deployer about your project.</p>
@@ -52,7 +53,7 @@
 <pre><code>$ cd &lt;root_of_your_project&gt;
 
 $ pip install django-deployer (this won't work until a release has been made to PyPi, so in the meantime, use the following)
-$ pip install -e git+git://github.com/natea/django-deployer.git#egg=django-deployer 
+$ pip install https://github.com/natea/django-deployer/archive/master.zip
 $ deployer-init
 $ fab setup
 </code></pre>
@@ -68,11 +69,11 @@ $ python setup.py develop
 
 <h3>Authors and Contributors</h3>
 
-<p>This project was born at the DjangoCon 2012 sprint by <a href="https://github.com/natea" class="user-mention">@natea</a> and <a href="https://github.com/johnthedebs" class="user-mention">@johnthedebs</a> with input from Jacob Kaplan Moss (<a href="https://github.com/jacobian" class="user-mention">@jacobian</a>), Andrew Godwin (<a href="https://github.com/andrewgodwin" class="user-mention">@andrewgodwin</a>) from ep.io, Gabriel Grant (<a href="https://github.com/gabrielgrant" class="user-mention">@gabrielgrant</a>) and Ken Cochrane (<a href="https://github.com/kencochrane" class="user-mention">@kencochrane</a>) from <a href="https://github.com/dotcloud" class="user-mention">@dotcloud</a>, Kenneth Reitz (<a href="https://github.com/kennethreitz" class="user-mention">@kennethreitz</a>) from <a href="https://github.com/heroku" class="user-mention">@heroku</a> and Diane Mueller from <a href="https://github.com/ActiveState" class="user-mention">@ActiveState</a>.</p>
+<p>This project was born at the DjangoCon 2012 sprint by <a href="https://github.com/natea" class="user-mention">@natea</a> and <a href="https://github.com/johnthedebs" class="user-mention">@johnthedebs</a> with input from Jacob Kaplan Moss (<a href="https://github.com/jacobian" class="user-mention">@jacobian</a>), Andrew Godwin (<a href="https://github.com/andrewgodwin" class="user-mention">@andrewgodwin</a>) from ep.io, Gabriel Grant (<a href="https://github.com/gabrielgrant" class="user-mention">@gabrielgrant</a>) and Ken Cochrane (<a href="https://github.com/kencochrane" class="user-mention">@kencochrane</a>) from <a href="https://github.com/DotCloud" class="user-mention">@DotCloud</a>, Kenneth Reitz (<a href="https://github.com/kennethreitz" class="user-mention">@kennethreitz</a>) from <a href="https://github.com/Heroku" class="user-mention">@Heroku</a> and Diane Mueller from <a href="https://github.com/ActiveState" class="user-mention">@ActiveState</a>.</p>
 
 <h3>Support or Contact</h3>
 
-<p>We'd love to get input for how to best push this project forward. If you represent a PaaS provider and would like to contribute, submit a pull request or contact <a href="https://github.com/natea" class="user-mention">@natea</a> with suggestions for making it better.</p>
+<p>We'd love to get input for how to best push this project forward. If you represent a PaaS provider and would like to contribute, submit a pull request or contact @natea with suggestions for making it better.</p>
 
 <h3>Resources</h3>
 
