@@ -13,7 +13,7 @@ PROJECT_ROOT = os.path.dirname(__file__)
 on_appengine = os.getenv('SERVER_SOFTWARE','').startswith('Google App Engine')
 
 # insert libraries
-REQUIRE_LIB_PATH = os.path.join(os.path.dirname(__file__), '..', 'env/lib/python2.7/site-packages')
+REQUIRE_LIB_PATH = os.path.join(os.path.dirname(__file__), '..', 'site-packages')
 
 lib_to_insert = [REQUIRE_LIB_PATH]
 map(lambda path: sys.path.insert(0, path), lib_to_insert)

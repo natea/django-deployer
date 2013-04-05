@@ -16,6 +16,18 @@ builtins:
 env_variables:
     DJANGO_SETTINGS_MODULE: '{{ project_name }}.settings_appengine'
 
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?index\.yaml
+- ^(.*/)?index\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^env/.*$
+
 handlers:
 - url: /static/
   static_dir: {{ project_name }}/static

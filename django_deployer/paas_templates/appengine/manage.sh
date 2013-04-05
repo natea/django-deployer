@@ -24,7 +24,14 @@ case "$1" in
     export SETTINGS_MODE=prod && manage_script syncdb
     ;;
   deploy)
+    # packaging site-packages
+    cp -r env/lib/python2.7/site-packages ./
+    cd site-packages 
+    rm -rf *.egg-info *.egg *.so *.pth django PIL
+    cd -
+    # deploy
     appcfg.py update --oauth2 .
+    rm -rf site-packages
     ;;
   *)
     manage_script $args
