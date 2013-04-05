@@ -4,7 +4,6 @@ try:
 except:
     pass
 
-from settings import *
 
 import os
 import sys
@@ -18,6 +17,9 @@ REQUIRE_LIB_PATH = os.path.join(os.path.dirname(__file__), '..', 'env/lib/python
 
 lib_to_insert = [REQUIRE_LIB_PATH]
 map(lambda path: sys.path.insert(0, path), lib_to_insert)
+
+# settings need to be after insertion of libraries' location
+from settings import *
 
 # use cloudsql while on the production
 if (on_appengine or
