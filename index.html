@@ -46,17 +46,18 @@
 <li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_django.html">Amazon Elastic Beanstalk</a></li>
 <li><a href="https://developers.google.com/appengine/docs/python/cloud-sql/django">Google App Engine</a></li>
 <li><a href="http://www.windowsazure.com/en-us/develop/python/tutorials/web-app-with-django/">Microsoft Azure</a></li>
-</ul><h3>Usage</h3>
+</ul><h3>Getting started</h3>
 
 <p>Install django-deployer in your virtualenv, and run the deployer-init command to copy the fabfile into your root folder. Then run the <code>fab setup</code> command to tell django-deployer about your project.</p>
 
-<pre><code>$ cd &lt;root_of_your_project&gt;
-
-$ pip install django-deployer (this won't work until a release has been made to PyPi, so in the meantime, use the following)
-$ pip install https://github.com/natea/django-deployer/archive/master.zip
+<pre><code>$ source /path/to/venv/bin/activate
+$ cd &lt;root_of_your_project&gt;
+$ pip install django-deployer
 $ deployer-init
 $ fab setup
 </code></pre>
+
+<p>Read more about this project <a href="https://github.com/natea/django-deployer/README.rst">README</a> page.</p>
 
 <h3>Development</h3>
 
