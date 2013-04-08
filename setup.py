@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-deployer",
-    version="0.1.4",
+    version="0.1.5",
     description="Django deployment tool for popular PaaS providers",
     long_description=open('README.rst').read() + '\n\n' + open('CHANGES.rst').read(),
     keywords="PaaS Django Dotcloud Stackato Heroku Gondor AWS OpenShift GAE appengine fabric deployment",

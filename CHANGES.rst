@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-0.1.4 (2013-04-08)
+0.1.5 (2013-04-08)
 ++++++++++++++++++
  
 - Need a MANIFEST.in in order to find the .txt and .rst files (@natea)
