@@ -15,7 +15,6 @@ setup(
     url="http://natea.github.io/django-deployer",
     license="MIT",
     packages=find_packages(),
-    package_data={'': ['*.txt', '*.rst'], 'django_deployer': ['paas_templates/*/*']},
     include_package_data = True,
     install_requires=[
         'fabric==1.6.0',  # formerly 1.4.3
