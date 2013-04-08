@@ -1,3 +1,8 @@
+0.1.3 (2013-04-08)
+++++++++++++++++++
+
+- Fixed bug with misnamed CHANGES.txt -> CHANGES.rst (@natea)
+
 0.1.2 (2013-04-08) 
 ++++++++++++++++++
 

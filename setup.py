@@ -6,20 +6,17 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-deployer",
-    version="0.1.2",
+    version="0.1.3",
     description="Django deployment tool for popular PaaS providers",
-    long_description=open('README.rst').read() + '\n\n' +
-                     open('CHANGES.txt').read(),
+    long_description=open('README.rst').read() + '\n\n' + open('CHANGES.rst').read(),
     keywords="PaaS Django Dotcloud Stackato Heroku Gondor AWS OpenShift GAE appengine fabric deployment",
     author="Nate Aune",
     author_email="nate@appsembler.com",
     url="http://natea.github.io/django-deployer",
     license="MIT",
     packages=find_packages(),
-    package_data={
-        '': ['*.txt', '*.rst'],
-        'django_deployer': ['paas_templates/*/*'],
-    },
+    package_data={'': ['*.txt', '*.rst'], 'django_deployer': ['paas_templates/*/*']},
+    include_package_data = True,
     install_requires=[
         'fabric==1.6.0',  # formerly 1.4.3
         'jinja2==2.6',
