@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-deployer",
-    version="0.1.1",
+    version="0.1.2",
     description="Django deployment tool for popular PaaS providers",
     long_description=open('README.rst').read() + '\n\n' +
                      open('CHANGES.txt').read(),
