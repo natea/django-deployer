@@ -71,7 +71,20 @@ def _validate_requirements(requirements):
 
     return requirements
 
+def _validate_managepy(managepy):
+    managepy_regex = r"^.+manage.py$"
 
+    pattern = re.compile(managepy_regex)
+    if not pattern.match(managepy):
+        raise ValueError(red("You must enter the relative path to your manage.py file to continue!"))
+
+    if not os.path.exists(os.path.join(os.getcwd(), managepy)):
+        raise ValueError(red(
+            "Couldn't find manage.py at the path you gave.\n" \
+            "Make sure you're using django-deployer from your project root."
+        ))
+
+    return managepy
 
 #
 # Utils

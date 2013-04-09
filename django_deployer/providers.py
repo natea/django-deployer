@@ -49,7 +49,6 @@ class PaaSProvider(object):
 
         cls._render_config('wsgi.py', 'wsgi.py', site)
 
-        import pdb; pdb.set_trace()
         yaml_template_name = os.path.join(provider, cls.provider_yml_name)
         cls._render_config(cls.provider_yml_name, yaml_template_name, site)
 
@@ -131,6 +130,7 @@ class DotCloud(PaaSProvider):
     """
     Dotcloud PaaSProvider.
     """
+
     name = "dotcloud"
 
     PYVERSIONS = {
@@ -173,10 +173,19 @@ class DotCloud(PaaSProvider):
     def init(cls, site):
         super(DotCloud, cls).init(site)
 
-        cls._render_config('createdb.py', os.path.join(cls.name, 'createdb.py'), site)
-        cls._render_config('mkadmin.py', os.path.join(cls.name, 'mkadmin.py'), site)
-        cls._render_config('nginx.conf', os.path.join(cls.name, 'nginx.conf'), site)
-        cls._render_config('postinstall', os.path.join(cls.name, 'postinstall'), site)
+        # config_list: files to put in project folder, django_config_list: files to put in django project folder
+        config_list = [
+            'createdb.py', 
+            'mkadmin.py',
+            'nginx.conf',
+            'postinstall',
+            'wsgi.py',
+            'requirements.txt'
+        ]
+
+        # for rendering configs under root
+        get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
+        map(get_config, config_list)
 
     def deploy():
         pass
@@ -243,7 +252,7 @@ Just a few more steps before you're ready to deploy your app!
         # Create virtual environment
         # TODO: detect whether it is a virtualenv
         if not os.path.isdir("env"):
-            print "Detected there is no any virtual environment, going to create one..."
+            print "Didn't find a virtual environment, so we're going to create one..."
             local("virtualenv --no-site-packages env")
 
         # install requirements for deployment

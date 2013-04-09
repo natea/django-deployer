@@ -8,6 +8,7 @@ from django_deployer.helpers import (
     _create_deploy_yaml,
     _validate_django_settings,
     _validate_project_name,
+    _validate_managepy,
     _read_file,
     _green,
     _yellow,
@@ -27,8 +28,8 @@ def init(provider=None):
 
         if cont.strip().lower() == "no":
             return None
-
-    _green("\nWe need to ask a few questions before we can deploy your Django app")
+    _green("\nWelcome to the django-deployer!")
+    _green("\nWe need to ask a few questions in order to set up your project to be deployed to a PaaS provider.")
 
     # TODO: identify the project dir based on where we find the settings.py or urls.py
     project_name = prompt(
@@ -41,6 +42,12 @@ def init(provider=None):
         "* What is your Django settings module?",
         default="%s.settings" % project_name,
         validate=_validate_django_settings
+    )
+
+    managepy = prompt(
+        "* Where is your manage.py file?",
+        default="%s/manage.py" % project_name,
+        validate=_validate_managepy
     )
 
     requirements = prompt("* Where is your requirements.txt file?", default="requirements.txt")
@@ -93,6 +100,7 @@ def init(provider=None):
         'project_name': project_name,
         'pyversion': pyversion,
         'django_settings': django_settings,
+        'managepy': managepy,
         'requirements': requirements,
         'static_url': static_url,
         'media_url': media_url,
