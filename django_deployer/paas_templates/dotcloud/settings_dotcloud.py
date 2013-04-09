@@ -1,20 +1,33 @@
-import dj_database_url
 import json
+
 with open('/home/dotcloud/environment.json') as f:
-  env = json.load(f)
+    env = json.load(f)
 
 from .settings import *
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-default_db_config = dj_database_url.parse(env["DOTCLOUD_DB_SQL_URL"])
-default_db_config["NAME"] = "djangodb" 
-# DB is the name of the database service defined in dotcloud.yml
-# additional databases can be defined and named here (i.e. DOTCLOUD_ANOTHERDB_SQL_URL)
-DATABASES = {
-    "default": default_db_config,
-}
+if 'DOTCLOUD_DATA_MYSQL_HOST' in env:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env['DOTCLOUD_PROJECT'],
+            'USER': env['DOTCLOUD_DATA_MYSQL_LOGIN'],
+            'PASSWORD': env['DOTCLOUD_DATA_MYSQL_PASSWORD'],
+            'HOST': env['DOTCLOUD_DATA_MYSQL_HOST'],
+            'PORT': int(env['DOTCLOUD_DATA_MYSQL_PORT']),
+        }
+    }
+elif 'DOTCLOUD_DB_SQL_HOST' in env:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env['DOTCLOUD_PROJECT'],
+            'USER': env['DOTCLOUD_DB_SQL_LOGIN'],
+            'PASSWORD': env['DOTCLOUD_DB_SQL_PASSWORD'],
+            'HOST': env['DOTCLOUD_DB_SQL_HOST'],
+            'PORT': int(env['DOTCLOUD_DB_SQL_PORT']),
+        }
+    }
 
 LOGGING = {
     "version": 1,
