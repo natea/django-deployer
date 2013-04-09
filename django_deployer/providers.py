@@ -49,6 +49,7 @@ class PaaSProvider(object):
 
         cls._render_config('wsgi.py', 'wsgi.py', site)
 
+        import pdb; pdb.set_trace()
         yaml_template_name = os.path.join(provider, cls.provider_yml_name)
         cls._render_config(cls.provider_yml_name, yaml_template_name, site)
 
@@ -96,23 +97,25 @@ Just a few more steps before you're ready to deploy your app!
 
 2. Once you've done that, target the stackato api with:
 
-       stackato target api.stacka.to
+       $ stackato target api.stacka.to
 
    and then login. You can find your sandbox password at
    https://account.activestate.com, which you'll need when
    using the command:
 
-       stackato login --email <email>
+       $ stackato login --email <email>
 
 3. You can push your app the first time with:
 
-       stackato push -n
+       $ stackato push -n
 
    and make subsequent updates with:
 
-       stackato update
+       $ stackato update
 
 """
+
+    provider_yml_name = "stackato.yml"
 
     def init():
         pass
@@ -135,6 +138,36 @@ class DotCloud(PaaSProvider):
         "Python2.7": "v2.7",
         "Python3.2": "v3.2",
     }
+
+    setup_instructions = """
+        Just a few more steps before you're ready to deploy your app!
+
+        1. Install the dotcloud command line tool with:
+
+                $ pip install dotcloud
+
+        2. Once you've done that, setup your Dotcloud environment for the first time:
+
+                $ dotcloud setup
+                dotCloud username or email: appsembler
+                Password:
+                ==> dotCloud authentication is complete! You are recommended to run `dotcloud check` now.
+
+                $ dotcloud check
+                ==> Checking the authentication status
+                ==> Client is authenticated as appsembler
+
+        3. You can create the app with:
+
+               $ dotcloud create myapp
+
+           and deploy it with:
+
+               $ dotcloud push
+
+        """
+
+    provider_yml_name = "dotcloud.yml"
 
     @classmethod
     def init(cls, site):
