@@ -33,20 +33,11 @@
       <section id="main_content" class="inner">
         <p>The goal of django-deployer is to minimize the effort to deploy a Django app to any of the popular PaaS providers. By asking a series of questions about the Django app, we can generate a generic deploy.yml file that can be consumed by any of the PaaS providers. Each PaaS provider can translate these requirements into a configuration that will work to deploy to their PaaS.</p>
 
-<h3>PaaS providers</h3>
+<h3>Video of using django-deployer</h3>
 
-<p>Here are instructions for how to deploy Django to various PaaS providers:</p>
+<p>Watch a <a href="http://appsembler.com/blog/deploy-django-apps-to-google-app-engine-with-django-deployer-in-5-minutes/">short 5 minute video</a> that shows how to use django-deployer to deploy a Django app to Google App Engine.</p>
 
-<ul>
-<li><a href="https://devcenter.heroku.com/articles/django">Heroku</a></li>
-<li><a href="http://docs.dotcloud.com/tutorials/python/django/">DotCloud</a></li>
-<li><a href="https://gondor.io/support/django/setup/">Gondor.io</a></li>
-<li><a href="http://appsembler.com/blog/django-deployment-using-openshift/">OpenShift</a></li>
-<li><a href="http://appsembler.com/blog/django-deployment-using-stackato/">Stackato</a></li>
-<li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_django.html">Amazon Elastic Beanstalk</a></li>
-<li><a href="https://developers.google.com/appengine/docs/python/cloud-sql/django">Google App Engine</a></li>
-<li><a href="http://www.windowsazure.com/en-us/develop/python/tutorials/web-app-with-django/">Microsoft Azure</a></li>
-</ul><h3>Getting started</h3>
+<h3>Getting started</h3>
 
 <p>Install django-deployer in your virtualenv, and run the deployer-init command to copy the fabfile into your root folder. Then run the <code>fab setup</code> command to tell django-deployer about your project.</p>
 
@@ -79,6 +70,22 @@ $ python setup.py develop
 <p>We'd love to get input for how to best push this project forward. If you represent a PaaS provider and would like to contribute, submit a pull request or contact @natea with suggestions for making it better.</p>
 
 <h3>Resources</h3>
+
+<p>Here are some other blog posts that I wrote about deploying Django using various PaaS providers:</p>
+
+<ul>
+<li><a href="http://appsembler.com/blog/journey-through-time-and-paas-introducing-django-deployer/">A journey through time and PaaS - introducing Django deployer</a></li>
+<li><a href="http://appsembler.com/blog/django-deployment-using-openshift/">Django deployment using OpenShift</a></li>
+<li><a href="http://appsembler.com/blog/django-deployment-using-stackato/">Django deployment using Stackato</a></li>
+</ul><p>And more howtos from each PaaS provider:</p>
+
+<ul>
+<li><a href="https://devcenter.heroku.com/articles/django">Heroku</a></li>
+<li><a href="http://docs.dotcloud.com/tutorials/python/django/">DotCloud</a></li>
+<li><a href="https://gondor.io/support/django/setup/">Gondor.io</a></li>
+<li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_django.html">Amazon Elastic Beanstalk</a></li>
+<li><a href="http://www.windowsazure.com/en-us/develop/python/tutorials/web-app-with-django/">Microsoft Azure</a></li>
+</ul><h3>Similar projects</h3>
 
 <p>This is not a new problem. Here is a collection of other deployment tools that we found when researching this project:</p>
 
