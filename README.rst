@@ -103,5 +103,10 @@ Which will clone the git repo into the ``src`` directory of your project's virtu
 Roadmap
 -------
 
-- Add support for Heroku, OpenShift and Amazon Elastic Beanstalk
+- Add support for Heroku, OpenShift, Amazon Elastic Beanstalk and Gondor
 - Perform some intelligent code analysis to better guess the settings (see the djangolint project - https://github.com/yumike/djangolint)
+- Write tests!
+- Caching (Redis, Memcache)
+- Celery
+- Email
+- SSL
