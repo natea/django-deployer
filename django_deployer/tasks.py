@@ -10,13 +10,15 @@ from django_deployer.helpers import (
     _validate_project_name,
     _validate_managepy,
     _validate_requirements,
+    _validate_admin_password,
+    _validate_providers,
     _read_file,
     _green,
     _yellow,
     _red,
 )
 
-from django_deployer.providers import PROVIDERS
+from .providers import PROVIDERS
 
 
 def init(provider=None):
@@ -34,8 +36,8 @@ def init(provider=None):
 
     # TODO: identify the project dir based on where we find the settings.py or urls.py
     project_name = prompt(
-        "* What is your Django project directory name?\n" \
-        "  (This usually contains your settings.py and a urls.py)",
+        "* What is your Django project directory name?\n"
+        "  (This usually contains your settings.py and urls.py)",
         validate=_validate_project_name
     )
 
@@ -52,7 +54,7 @@ def init(provider=None):
     )
 
     requirements = prompt(
-        "* Where is your requirements.txt file?", 
+        "* Where is your requirements.txt file?",
         default="requirements.txt",
         validate=_validate_requirements
     )
@@ -71,17 +73,23 @@ def init(provider=None):
     media_url = prompt("* What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-        provider = prompt("* Which provider would you like to deploy to (dotcloud, openshift, appengine)?", validate=r".+")
+        provider = prompt("* Which provider would you like to deploy to (dotcloud, appengine, stackato)?",
+                          validate=_validate_providers)
 
     # Where to place the provider specific questions
     site = {}
     additional_site = {}
 
     if provider == "appengine":
-        applicationid = prompt("* What's your Google App Engine application ID (see https://appengine.google.com/)?")
-        instancename = prompt("* What's the full instance ID of your Cloud SQL instance (should be in format \"projectid:instanceid\" found at https://code.google.com/apis/console/)?", validate=r'.+:.+')
-        databasename = prompt("* What's your database name?")
-        sdk_location = prompt("* Where is your Google App Engine SDK location?", default="/usr/local/google_appengine")
+        applicationid = prompt("* What's your Google App Engine application ID (see https://appengine.google.com/)?", validate=r'.+')
+        instancename = prompt("* What's the full instance ID of your Cloud SQL instance\n"
+                              "(should be in format \"projectid:instanceid\" found at https://code.google.com/apis/console/)?", validate=r'.+:.+')
+        databasename = prompt("* What's your database name?", validate=r'.+')
+        sdk_location = prompt("* Where is your Google App Engine SDK location?",
+                              default="/usr/local/google_appengine",
+                              validate=r'.+'  # TODO: validate that this path exists
+                              )
+
         additional_site.update({
             # quotes for the yaml issue
             'application_id': applicationid,
@@ -102,7 +110,10 @@ def init(provider=None):
         }
 
     # TODO: add some validation that the admin password is valid
-    admin_password = prompt("* What do you want to set as the admin password?")
+    # TODO: let the user choose the admin username instead of hardcoding it to 'admin'
+    admin_password = prompt("* What do you want to set as the admin password?",
+                            validate=_validate_admin_password
+                            )
 
     site.update({
         'project_name': project_name,
