@@ -9,6 +9,7 @@ from django_deployer.helpers import (
     _validate_django_settings,
     _validate_project_name,
     _validate_managepy,
+    _validate_requirements,
     _read_file,
     _green,
     _yellow,
@@ -50,7 +51,11 @@ def init(provider=None):
         validate=_validate_managepy
     )
 
-    requirements = prompt("* Where is your requirements.txt file?", default="requirements.txt")
+    requirements = prompt(
+        "* Where is your requirements.txt file?", 
+        default="requirements.txt",
+        validate=_validate_requirements
+    )
     # TODO: confirm that the file exists
     # parse the requirements file and warn the user about best practices:
     #   Django==1.4.1
@@ -96,6 +101,9 @@ def init(provider=None):
             'database': database,
         }
 
+    # TODO: add some validation that the admin password is valid
+    admin_password = prompt("* What do you want to set as the admin password?")
+
     site.update({
         'project_name': project_name,
         'pyversion': pyversion,
@@ -105,6 +113,7 @@ def init(provider=None):
         'static_url': static_url,
         'media_url': media_url,
         'provider': provider,
+        'admin_password': admin_password,
     })
 
     site.update(additional_site)
