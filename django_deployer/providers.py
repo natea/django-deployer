@@ -246,7 +246,7 @@ Just a few more steps before you're ready to deploy your app!
         map(get_config, config_list)
 
         # for rendering configs under django project folder
-        get_django_config = lambda filename: cls._render_config("%s/%s"%(site['project_name'], filename), os.path.join(cls.name, filename), site)
+        get_django_config = lambda filename: cls._render_config("%s/%s" % (site['project_name'], filename), os.path.join(cls.name, filename), site)
         map(get_django_config, django_config_list)
 
     @classmethod
@@ -264,7 +264,7 @@ Just a few more steps before you're ready to deploy your app!
             local("virtualenv --no-site-packages env")
 
         # install requirements for deployment
-        local("env/bin/pip install -r %(requirements)s" % site)
+        local("env/bin/pip install -r requirements.txt" % site)
         local("env/bin/pip install -r requirements_deploy.txt")
 
         # Collects static files into static folder
