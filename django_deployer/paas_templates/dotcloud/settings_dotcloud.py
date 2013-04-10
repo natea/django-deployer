@@ -5,6 +5,11 @@ with open('/home/dotcloud/environment.json') as f:
 
 from .settings import *
 
+STATIC_ROOT = '/home/dotcloud/volatile/static/'
+STATIC_URL = '{{ static_url }}'
+
+MEDIA_ROOT = '/home/dotcloud/data/media/'
+MEDIA_URL = '{{ media_url }}'
 
 if 'DOTCLOUD_DATA_MYSQL_HOST' in env:
     DATABASES = {
