@@ -84,6 +84,31 @@ def _validate_managepy(managepy):
     return managepy
 
 
+def _validate_admin_password(admin_password):
+    password_regex = r"[A-Za-z0-9@#$%^&+=]{6,}"
+
+    pattern = re.compile(password_regex)
+    if not pattern.match(admin_password):
+        raise ValueError(red(
+            "The password must be at least 6 characters and contain only the following characters:\n"
+            "A-Za-z0-9@#$%^&+="
+        ))
+
+    return admin_password
+
+
+def _validate_providers(provider):
+    providers = ['stackato', 'dotcloud', 'appengine']
+
+    if provider not in providers:
+        raise ValueError(red(
+            "Invalid provider. You must choose one of these providers:\n"
+            "%s" % providers
+        ))
+
+    return provider
+
+
 #
 # Utils
 #
