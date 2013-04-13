@@ -31,13 +31,18 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>The goal of django-deployer is to minimize the effort to deploy a Django app to any of the popular PaaS providers. By asking a series of questions about the Django app, we can generate a generic deploy.yml file that can be consumed by any of the PaaS providers. Each PaaS provider can translate these requirements into a configuration that will work to deploy to their PaaS.</p>
+        <p>django-deployer is a deployment configuration tool for Django that currently prepares most Django projects to be deployed to the following PaaS providers: Dotcloud, Stackato and Google App Engine.</p>
 
-<h3>Video of using django-deployer</h3>
+<p>The goal of django-deployer is to minimize the effort to deploy a Django app to any of these PaaS providers. It asks a series of questions about your Django project, and then generates a generic deploy.yml file that captures all of your project's requirements. </p>
 
-<p>Watch a <a href="http://appsembler.com/blog/deploy-django-apps-to-google-app-engine-with-django-deployer-in-5-minutes/">short 5 minute video</a> that shows how to use django-deployer to deploy a Django app to Google App Engine.</p>
+<p>When you choose a particular PaaS provider, django-deployer then translates the requirements defined in the deploy.yml file and generates configuration files for that specific PaaS provider.</p>
 
-<h3>Getting started</h3>
+<h3>Videos of using django-deployer</h3>
+
+<ul>
+<li><a href="http://appsembler.com/blog/deploy-django-apps-to-google-app-engine-with-django-deployer-in-5-minutes/">How to use django-deployer to deploy a Django app to Google App Engine</a></li>
+<li><a href="http://appsembler.com/blog/deploy-django-apps-to-dotcloud-with-django-deployer-in-5-minutes/">How to use django-deployer to deploy a Django app to Dotcloud</a></li>
+</ul><h3>Getting started</h3>
 
 <p>Install django-deployer in your virtualenv, and run the deployer-init command to copy the fabfile into your root folder. Then run the <code>fab setup</code> command to tell django-deployer about your project.</p>
 
@@ -57,6 +62,11 @@ $ fab setup
 <pre><code>$ git clone git://github.com/natea/django-deployer.git
 $ cd django-deployer
 $ python setup.py develop
+</code></pre>
+
+<p>Or just use pip and look for the source code in the /src directory of your virtualenv:</p>
+
+<pre><code>$ pip install -e git+git://github.com/natea/django-deployer.git#egg=django-deployer
 </code></pre>
 
 <h3>Authors and Contributors</h3>
