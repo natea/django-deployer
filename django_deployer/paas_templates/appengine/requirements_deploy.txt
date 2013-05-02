@@ -1,1 +1,2 @@
 django_rocket_engine
+django-google-storage

@@ -2,6 +2,7 @@ PROJECT_NAME="{{ project_name }}"
 CLOUDSQL_DATABASENAME="{{ databasename }}"
 CLOUDSQL_INSTANCENAME="{{ instancename }}"
 APPENGINE_SDK_LOCATION={{ sdk_location }}
+MANAGE_SCRIPT_LOCATION="{{ managepy }}"
 APPLICATION_ID="{{ application_id }}"
 PATH="$APPENGINE_SDK_LOCATION:$PATH"
 
@@ -12,7 +13,7 @@ export APPLICATION_ID
 args=$@
 
 manage_script () {
-    env/bin/python $PROJECT_NAME/manage.py $@ --settings=$DJANGO_SETTINGS_MODULE
+    env/bin/python $MANAGE_SCRIPT_LOCATION $@ --settings=$DJANGO_SETTINGS_MODULE
 }
 
 
@@ -23,11 +24,14 @@ case "$1" in
   cloudsyncdb)
     export SETTINGS_MODE=prod && manage_script syncdb
     ;;
+  clouddbshell)
+    export SETTINGS_MODE=prod && manage_script dbshell
+    ;;
   deploy)
     # packaging site-packages
     cp -r env/lib/python2.7/site-packages ./
     cd site-packages 
-    rm -rf *.egg-info *.egg *.so *.pth django PIL
+    rm -rf *.so django PIL
     cd -
     # deploy
     appcfg.py update --oauth2 .

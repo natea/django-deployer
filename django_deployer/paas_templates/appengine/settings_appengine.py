@@ -61,7 +61,13 @@ DEFAULT_FROM_EMAIL='example@example.com'
 #4. Log out, and check for the validation email.
 
 # use Blob datastore for default file storage
-DEFAULT_FILE_STORAGE = 'rocket_engine.storage.BlobStorage'
+DEFAULT_FILE_STORAGE = 'django-google-storage.storage.GoogleStorage'
+GS_ACCESS_KEY_ID = '<fill-your-own>'
+GS_SECRET_ACCESS_KEY = '<fill-your-own>'
+GS_STORAGE_BUCKET_NAME = '<fill-your-own>'
+
+if not (GS_ACCESS_KEY_ID and GS_SECRET_ACCESS_KEY and GS_STORAGE_BUCKET_NAME):
+    print 'Warning: no correct settings for Google Storage, please provide it in settings_appengine.py'
 
 # static_url
 STATIC_URL = '/static/'

@@ -28,3 +28,4 @@ pip-log.txt
 
 # Sphinx build
 docs/_build/
+/.project
