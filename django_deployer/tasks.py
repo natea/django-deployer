@@ -49,7 +49,7 @@ def init(provider=None):
 
     managepy = prompt(
         "* Where is your manage.py file?",
-        default="%s/manage.py" % project_name,
+        default="./manage.py",
         validate=_validate_managepy
     )
 
