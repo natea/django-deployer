@@ -1,6 +1,7 @@
 import git
 import uuid
 import os
+from jinja2 import Template
 
 def clone_git_repo(repo_url):
     """
@@ -22,24 +23,28 @@ def clone_git_repo(repo_url):
     repo = git.Repo.clone_from(repo_url, REPO_CACHE_LOCATION)
     return REPO_CACHE_LOCATION
 
-def get_template_filelist(repo_path):
+def get_template_filelist(repo_path, ignore_files=[], ignore_folders=[]):
     """
     input: local repo path
     output: path list of files which need to be rendered
     """
-    ignoring_files = ['.gitignore']
-    ignoring_folders = ['.git']
+
+    default_ignore_files = ['.gitignore']
+    default_ignore_folders = ['.git']
+
+    ignore_files += default_ignore_files
+    ignore_folders += default_ignore_folders
 
     filelist = []
 
     for root, folders, files in os.walk(repo_path):
-        for ignoring_file in ignoring_files:
-            if ignoring_file in files:
-                files.remove(ignoring_file)
+        for ignore_file in ignore_files:
+            if ignore_file in files:
+                files.remove(ignore_file)
 
-        for ignoring_folder in ignoring_folders:
-            if ignoring_folder in folders:
-                folders.remove(ignoring_folder)
+        for ignore_folder in ignore_folders:
+            if ignore_folder in folders:
+                folders.remove(ignore_folder)
 
         for file_name in files:
             filelist.append( '%s/%s' % (root, file_name))
@@ -53,17 +58,28 @@ def render_from_repo(repo_path, to_path, template_params):
     """
     repo_path = repo_path.rstrip('/')
     to_path = to_path.rstrip('/')
-    files_to_render = get_template_filelist(repo_path)
+    files_to_render = get_template_filelist(repo_path, ignore_folders=['t_project'])
 
+    project_repo_path = os.path.join(repo_path, "t_project")
+    project_path = os.path.join(to_path, template_params['project_name'])
+    project_files_to_render = get_template_filelist(project_repo_path)
+
+    # rendering generic deploy files
     for single_file_path in files_to_render:
         source_file_path = single_file_path
         dest_file_path = source_file_path.replace(repo_path, to_path)
 
         render_from_single_file(source_file_path, dest_file_path, template_params)
 
+    # rendering project deploy files
+    for single_file_path in project_files_to_render:
+        source_file_path = single_file_path
+        dest_file_path = source_file_path.replace(project_repo_path, project_path)
+
+        render_from_single_file(source_file_path, dest_file_path, template_params)
+
 def render_from_single_file(file_path, dest_file_path, template_params):
-    from jinja2 import Template
-    import os
+
     dest_dirname = os.path.dirname(dest_file_path)
     if not os.path.exists(dest_dirname):
         os.makedirs(dest_dirname)
