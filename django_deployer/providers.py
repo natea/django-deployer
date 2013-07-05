@@ -4,12 +4,16 @@ import os
 from jinja2 import Environment, PackageLoader
 
 from django_deployer.helpers import _write_file
+from django_deployer import utils
 
 from fabric.operations import local
 from fabric.context_managers import shell_env
 
 
 template_env = Environment(loader=PackageLoader('django_deployer', 'paas_templates'))
+
+
+
 
 
 class PaaSProvider(object):
@@ -23,10 +27,23 @@ class PaaSProvider(object):
     setup_instructions = ""
     PYVERSIONS = {}
     provider_yml_name = "%s.yml" % name
+    git_template = False
+    git_template_url = ""
 
     @classmethod
     def init(cls, site):
-        cls._create_configs(site)
+        if cls.git_template:
+            # do render from git repo
+            print "Cloning template files..."
+            repo_local_copy = utils.clone_git_repo(cls.git_template_url)
+            print "cloned"
+            print "start rendering files from templates"
+            target_path = os.getcwd()
+            utils.render_from_repo(repo_local_copy, target_path, site)
+            print "rendering done"
+            
+        else:
+            cls._create_configs(site)
         print cls.setup_instructions
 
     @classmethod
@@ -276,9 +293,30 @@ Just a few more steps before you're ready to deploy your app!
     def delete():
         pass
 
+class OpenShift(PaaSProvider):
+    """
+    OpenShift PaaSProvider
+    """
+    name = 'openshift'
+
+    PYVERSIONS = {
+        "Python2.6": "v2.6"
+        }
+
+    setup_instructions = ""
+    git_template = True
+    git_template_url = "git@github.com:littleq0903/django-deployer-template-openshift-experiment.git"
+
+    @classmethod
+    def init(cls, site):
+        super(OpenShift, cls).init(site)
+
+
+
 
 PROVIDERS = {
     'stackato': Stackato,
     'dotcloud': DotCloud,
+    'openshift': OpenShift,
     'appengine': AppEngine
 }

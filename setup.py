@@ -25,6 +25,7 @@ setup(
         'pyyaml==3.10',
         'sphinx==1.1.3',
         'requests==0.14.2',
+        'GitPython',
     ],
     classifiers=(
         "Development Status :: 3 - Alpha",

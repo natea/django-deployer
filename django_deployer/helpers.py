@@ -98,7 +98,7 @@ def _validate_admin_password(admin_password):
 
 
 def _validate_providers(provider):
-    providers = ['stackato', 'dotcloud', 'appengine']
+    providers = ['stackato', 'dotcloud', 'appengine', 'openshift']
 
     if provider not in providers:
         raise ValueError(red(
