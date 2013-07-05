@@ -73,7 +73,7 @@ def init(provider=None):
     media_url = prompt("* What is your MEDIA_URL?", default="/media/")
 
     if not provider:
-        provider = prompt("* Which provider would you like to deploy to (dotcloud, appengine, stackato)?",
+        provider = prompt("* Which provider would you like to deploy to (dotcloud, appengine, stackato, openshift)?",
                           validate=_validate_providers)
 
     # Where to place the provider specific questions
