@@ -250,21 +250,13 @@ Just a few more steps before you're ready to deploy your app!
 
     provider_yml_name = "app.yaml"
 
+    # switch to the git repo
+    git_template = True
+    git_template_url = "git@github.com:littleq0903/django-deployer-template-appengine.git"
+
     @classmethod
     def init(cls, site):
         super(AppEngine, cls).init(site)
-
-        # config_list: files to put in project folder, django_config_list: files to put in django project folder
-        config_list = ['requirements_deploy.txt', 'manage.sh']
-        django_config_list = ['urls_appengine.py']
-
-        # for rendering configs under root
-        get_config = lambda filename: cls._render_config(filename, os.path.join(cls.name, filename), site)
-        map(get_config, config_list)
-
-        # for rendering configs under django project folder
-        get_django_config = lambda filename: cls._render_config("%s/%s" % (site['project_name'], filename), os.path.join(cls.name, filename), site)
-        map(get_django_config, django_config_list)
 
     @classmethod
     def deploy(cls, site):
