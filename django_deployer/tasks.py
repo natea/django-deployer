@@ -104,7 +104,13 @@ def init(provider=None):
         }
 
     elif provider == "openshift":
+        application_name = prompt("* What is your openshift application name?")
         database = prompt("* What database does your app use?", default="sqlite3")
+
+        site = {
+            'database': database,
+            'application_name': application_name
+        }
 
     else:
         database = prompt("* What database does your app use?", default="PostgreSQL")
