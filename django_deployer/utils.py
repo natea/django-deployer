@@ -56,11 +56,13 @@ def render_from_repo(repo_path, to_path, template_params):
     """
     rendering all files into the target directory
     """
+    TEMPLATE_PROJECT_FOLDER_PLACEHOLDER_NAME = 'deployer_project'
+
     repo_path = repo_path.rstrip('/')
     to_path = to_path.rstrip('/')
-    files_to_render = get_template_filelist(repo_path, ignore_folders=['t_project'])
+    files_to_render = get_template_filelist(repo_path, ignore_folders=[TEMPLATE_PROJECT_FOLDER_PLACEHOLDER_NAME])
 
-    project_repo_path = os.path.join(repo_path, "t_project")
+    project_repo_path = os.path.join(repo_path, TEMPLATE_PROJECT_FOLDER_PLACEHOLDER_NAME)
     project_path = os.path.join(to_path, template_params['project_name'])
     project_files_to_render = get_template_filelist(project_repo_path)
 
@@ -81,6 +83,7 @@ def render_from_repo(repo_path, to_path, template_params):
 def render_from_single_file(file_path, dest_file_path, template_params):
 
     dest_dirname = os.path.dirname(dest_file_path)
+
     if not os.path.exists(dest_dirname):
         os.makedirs(dest_dirname)
 

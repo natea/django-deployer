@@ -12,8 +12,9 @@ from fabric.context_managers import shell_env
 
 template_env = Environment(loader=PackageLoader('django_deployer', 'paas_templates'))
 
-
-
+def run_hooks(script_name):
+    HOOKS_FOLDER = 'deployer_hooks'
+    local('bash %s/%s' % (HOOKS_FOLDER, script_name) )
 
 
 class PaaSProvider(object):
@@ -32,23 +33,35 @@ class PaaSProvider(object):
 
     @classmethod
     def init(cls, site):
+        """
+        put site settings in the header of the script
+        """
+        bash_header = ""
+        for k,v in site.items():
+            bash_header += "%s=%s" % (k.upper(), v)
+            bash_header += '\n'
+        site['bash_header'] = bash_header
+
+        # TODO: execute before_deploy
+        # P.S. running init_before seems like impossible, because the file hasn't been rendered.
         if cls.git_template:
             # do render from git repo
             print "Cloning template files..."
             repo_local_copy = utils.clone_git_repo(cls.git_template_url)
-            print "cloned"
-            print "start rendering files from templates"
+            print "Rendering files from templates..."
             target_path = os.getcwd()
             utils.render_from_repo(repo_local_copy, target_path, site)
-            print "rendering done"
-            
         else:
             cls._create_configs(site)
         print cls.setup_instructions
+        # TODO: execute after_deploy
+        run_hooks('init_after')
 
     @classmethod
     def deploy(cls):
-        raise NotImplementedError()
+        run_hooks('deploy_before')
+        run_hooks('deploy')
+        run_hooks('deploy_after')
 
     @classmethod
     def delete(cls):
@@ -258,29 +271,6 @@ Just a few more steps before you're ready to deploy your app!
     def init(cls, site):
         super(AppEngine, cls).init(site)
 
-    @classmethod
-    def deploy(cls, site):
-        """
-        tasks:
-            * collect statics
-            * fetch all the required libraries from pip (require_deploy.txt)
-            * deploy
-        """
-        # Create virtual environment
-        # TODO: detect whether it is a virtualenv
-        if not os.path.isdir("env"):
-            print "Didn't find a virtual environment, so we're going to create one..."
-            local("virtualenv --no-site-packages env")
-
-        # install requirements for deployment
-        local("env/bin/pip install -r requirements.txt" % site)
-        local("env/bin/pip install -r requirements_deploy.txt")
-
-        # Collects static files into static folder
-        local("sh manage.sh collectstatic --noinput")
-
-        # deploy
-        local("sh manage.sh deploy")
 
     def delete():
         pass
@@ -304,7 +294,7 @@ class OpenShift(PaaSProvider):
         super(OpenShift, cls).init(site)
 
         #set git url to rhc
-        local("sh scripts_deployer/setgiturl.sh %s" % site["application_name"])
+        local("sh deployer_scripts/setgiturl.sh %s" % site["application_name"])
         local("chmod a+x .openshift/action_hooks/*")
 
         # the first time deployment need to do "git push rhc --force"
