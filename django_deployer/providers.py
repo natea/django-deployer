@@ -294,8 +294,6 @@ class OpenShift(PaaSProvider):
         super(OpenShift, cls).init(site)
 
         #set git url to rhc
-        local("sh deployer_scripts/setgiturl.sh %s" % site["application_name"])
-        local("chmod a+x .openshift/action_hooks/*")
 
         # the first time deployment need to do "git push rhc --force"
 
