@@ -35,15 +35,10 @@ def init(provider=None):
     _green("\nWe need to ask a few questions in order to set up your project to be deployed to a PaaS provider.")
 
     # TODO: identify the project dir based on where we find the settings.py or urls.py
-    project_name = prompt(
-        "* What is your Django project directory name?\n"
-        "  (This usually contains your settings.py and urls.py)",
-        validate=_validate_project_name
-    )
 
     django_settings = prompt(
         "* What is your Django settings module?",
-        default="%s.settings" % project_name,
+        default="settings",
         validate=_validate_django_settings
     )
 
@@ -122,8 +117,11 @@ def init(provider=None):
                             validate=_validate_admin_password
                             )
 
+    import random
+    SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
+    SECRET_KEY = "'" + SECRET_KEY + "'"
+
     site.update({
-        'project_name': project_name,
         'pyversion': pyversion,
         'django_settings': django_settings,
         'managepy': managepy,
@@ -132,6 +130,7 @@ def init(provider=None):
         'media_url': media_url,
         'provider': provider,
         'admin_password': admin_password,
+        'secret_key': SECRET_KEY,
     })
 
     site.update(additional_site)

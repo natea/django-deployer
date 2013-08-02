@@ -62,9 +62,6 @@ def render_from_repo(repo_path, to_path, template_params):
     to_path = to_path.rstrip('/')
     files_to_render = get_template_filelist(repo_path, ignore_folders=[TEMPLATE_PROJECT_FOLDER_PLACEHOLDER_NAME])
 
-    project_repo_path = os.path.join(repo_path, TEMPLATE_PROJECT_FOLDER_PLACEHOLDER_NAME)
-    project_path = os.path.join(to_path, template_params['project_name'])
-    project_files_to_render = get_template_filelist(project_repo_path)
 
     # rendering generic deploy files
     for single_file_path in files_to_render:
@@ -73,12 +70,6 @@ def render_from_repo(repo_path, to_path, template_params):
 
         render_from_single_file(source_file_path, dest_file_path, template_params)
 
-    # rendering project deploy files
-    for single_file_path in project_files_to_render:
-        source_file_path = single_file_path
-        dest_file_path = source_file_path.replace(project_repo_path, project_path)
-
-        render_from_single_file(source_file_path, dest_file_path, template_params)
 
 def render_from_single_file(file_path, dest_file_path, template_params):
 
