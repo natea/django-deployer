@@ -51,6 +51,7 @@ class PaaSProvider(object):
             print "Rendering files from templates..."
             target_path = os.getcwd()
             settings_dir = '/'.join(site['django_settings'].split('.')[:-1])
+            site['project_name'] = settings_dir.replace('/', '.')
             settings_dir_path = target_path
             if settings_dir:
                 settings_dir_path +=  '/' + settings_dir

@@ -72,14 +72,12 @@ def render_from_repo(repo_path, to_path, template_params, settings_dir):
 
     settings_template_dir = os.path.join(repo_path, TEMPLATE_PROJECT_FOLDER_PLACEHOLDER_NAME)
     settings_files = get_template_filelist(settings_template_dir)
-    print settings_dir
 
     # rendering settings file
     for single_file_path in settings_files:
         source = single_file_path
         dest = single_file_path.replace(settings_template_dir, settings_dir)
         render_from_single_file(source, dest, template_params)
-        print source, '-->',  dest
 
 
 
