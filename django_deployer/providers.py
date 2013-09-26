@@ -50,7 +50,11 @@ class PaaSProvider(object):
             repo_local_copy = utils.clone_git_repo(cls.git_template_url)
             print "Rendering files from templates..."
             target_path = os.getcwd()
-            utils.render_from_repo(repo_local_copy, target_path, site)
+            settings_dir = '/'.join(site['django_settings'].split('.')[:-1])
+            settings_dir_path = target_path
+            if settings_dir:
+                settings_dir_path +=  '/' + settings_dir
+            utils.render_from_repo(repo_local_copy, target_path, site, settings_dir_path)
         else:
             cls._create_configs(site)
         print cls.setup_instructions

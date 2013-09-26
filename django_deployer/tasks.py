@@ -160,4 +160,4 @@ def deploy(provider=None):
         site = yaml.safe_load(_read_file(DEPLOY_YAML))
 
     provider_class = PROVIDERS[site['provider']]
-    provider_class.deploy(site)
+    provider_class.deploy()
