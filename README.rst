@@ -1,10 +1,7 @@
 django-deployer
-===============
+=============== 
 
-django-deployer is a deployment tool for Django that currently deploys any Django app to the following PaaS providers: 
-Dotcloud, Stackato, OpenShift and Google App Engine.
-
-The goal of django-deployer is to minimize the effort to deploy a Django app to any of the popular PaaS providers. It asks a series of questions about your Django project, and then generates a generic deploy.yml file that captures all of your project's requirements. django-deployer then uses this deploy.yml file to translate these requirements into specific configurations for each PaaS. 
+django-deployer is a deployment tool for Django that currently deploys any Django app to the following PaaS providers: Dotcloud, Stackato, OpenShift and Google App Engine.  The goal of django-deployer is to minimize the effort to deploy a Django app to any of the popular PaaS providers. It asks a series of questions about your Django project, and then generates a generic deploy.yml file that captures all of your project's requirements. django-deployer then uses this deploy.yml file to translate these requirements into specific configurations for each PaaS. 
 
 See the roadmap below for adding support for more providers: Heroku, OpenShift, Elastic Beanstalk and Gondor.
 
@@ -24,7 +21,7 @@ In this example (using `paasbakeoff <http://github.com/appsembler/paasbakeoff>`_
 .. code:: bash
 
     $ deployer-init
-    $ fab setup
+    $ fab -f fabfile_deployer.py setup
 
 	We need to ask a few questions before we can deploy your Django app
     * What is your Django settings module? [settings]
@@ -35,9 +32,7 @@ In this example (using `paasbakeoff <http://github.com/appsembler/paasbakeoff>`_
     * What is your MEDIA_URL? [/media/]
     * Which provider would you like to deploy to (dotcloud, appengine, stackato, openshift)?
     * What's your Google App Engine application ID (see https://appengine.google.com/)?
-    * What's the full instance ID of your Cloud SQL instance
-    (should be in format "projectid:instanceid" found at https://code.google.com/apis/console/)?
-    * What's your database name?
+    * What's the full instance ID of your Cloud SQL instance (should be in format "projectid:instanceid" found at https://code.google.com/apis/console/)?  * What's your database name?
     * Where is your Google App Engine SDK location? [/usr/local/google_appengine]
     * What do you want to set as the admin password?
 	Creating a deploy.yml with your app's deploy info...
