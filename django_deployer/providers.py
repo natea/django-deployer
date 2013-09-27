@@ -253,7 +253,7 @@ Just a few more steps before you're ready to deploy your app!
 
 1. Run this command to create the virtualenv with all the packages and deploy:
 
-        $ fab deploy
+        $ fab -f fabfile_deployer.py deploy
 
 2. Create and sync the db on the Cloud SQL:
 
