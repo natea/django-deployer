@@ -1,9 +1,9 @@
 Git Template Repository
 =======================
 
-Now django-deployer supports templating by fetching from remote git repository, to create a new provider class, you could implement a new class which inherits to `django_deployer.providers.PaaSProvider`.
+Now django-deployer supports templating by fetching from remote git repository, to create a new provider class, you could implement a new class which inherits to ``django_deployer.providers.PaaSProvider``.
 
-The only two attributes that does matter is `git_template` and `git_template_url`, you should define the provider class as following:
+The only two attributes that does matter is ``git_template`` and ``git_template_url``, you should define the provider class as following:
 
 
 .. code:: python
