@@ -2,7 +2,7 @@ django-deployer
 ===============
 
 django-deployer is a deployment tool for Django that currently deploys any Django app to the following PaaS providers: 
-Dotcloud, Stackato and Google App Engine.
+Dotcloud, Stackato, OpenShift and Google App Engine.
 
 The goal of django-deployer is to minimize the effort to deploy a Django app to any of the popular PaaS providers. It asks a series of questions about your Django project, and then generates a generic deploy.yml file that captures all of your project's requirements. django-deployer then uses this deploy.yml file to translate these requirements into specific configurations for each PaaS. 
 
@@ -27,18 +27,19 @@ In this example (using `paasbakeoff <http://github.com/appsembler/paasbakeoff>`_
     $ fab setup
 
 	We need to ask a few questions before we can deploy your Django app
-	* What is your Django project directory name?
-	  (This usually contains your settings.py and a urls.py) mywebsite
-	* What is your Django settings module? [mywebsite.settings] 
-	* Where is your requirements.txt file? [requirements.txt] mywebsite/requirements/project.txt
-	* What version of Python does your app need? [Python2.7] 
-	* What is your STATIC_URL? [/static/] 
-	* What is your MEDIA_URL? [/media/] 
-	* Which provider would you like to deploy to (dotcloud, openshift, appengine)? appengine
-	* What's your Google App Engine application ID (see https://appengine.google.com/)? djangodeployermezz
-	* What's the full instance ID of your Cloud SQL instance (should be in format "projectid:instanceid" found at https://code.google.com/apis/console/)? djangomezzanine:djangomezzdb
-	* What's your database name? appenginedemo
-	* Where is your Google App Engine SDK location? [/usr/local/google_appengine] 
+    * What is your Django settings module? [settings]
+    * Where is your manage.py file? [./manage.py]
+    * Where is your requirements.txt file? [requirements.txt]
+    * What version of Python does your app need? [Python2.7]
+    * What is your STATIC_URL? [/static/]
+    * What is your MEDIA_URL? [/media/]
+    * Which provider would you like to deploy to (dotcloud, appengine, stackato, openshift)?
+    * What's your Google App Engine application ID (see https://appengine.google.com/)?
+    * What's the full instance ID of your Cloud SQL instance
+    (should be in format "projectid:instanceid" found at https://code.google.com/apis/console/)?
+    * What's your database name?
+    * Where is your Google App Engine SDK location? [/usr/local/google_appengine]
+    * What do you want to set as the admin password?
 	Creating a deploy.yml with your app's deploy info...
 	Created /Users/nateaune/Dropbox/code/paasbakeoff/deploy.yml
 
@@ -46,7 +47,7 @@ In this example (using `paasbakeoff <http://github.com/appsembler/paasbakeoff>`_
 
 	1. Run this command to create the virtualenv with all the packages and deploy:
 
-	        $ fab deploy
+	        $ fab -f fabfile_deployer.py deploy
 
 	2. Create and sync the db on the Cloud SQL:
 
